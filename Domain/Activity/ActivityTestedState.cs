@@ -11,6 +11,11 @@ public class ActivityTestedState : IActivityState
         _context = context;
     }
 
+    public void Accept(IVisitor visitor)
+    {
+        throw new NotImplementedException();
+    }
+
     public void SetTodo()
     {
         _context.SetState(new ActivityTodoState(_context));

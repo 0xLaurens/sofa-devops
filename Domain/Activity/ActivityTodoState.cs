@@ -9,6 +9,12 @@ public class ActivityTodoState: IActivityState
     {
         _context = context;
     }
+
+    public void Accept(IVisitor visitor)
+    {
+        throw new NotImplementedException();
+    }
+
     public void SetTodo()
     {
         throw new InvalidOperationException("Activity is already in the todo");
