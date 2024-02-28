@@ -1,11 +1,12 @@
 using Domain;
+using Domain.Sprint;
 
 
-public class Sprint
+public class Sprint: ISprintContext
 {
-    private SprintStatus _status;
-    private Review _review;
+    private ISprintState _sprintState; 
     
+    private Review _review;
     private string _name;
     private DateTime _startDate;
     private DateTime _endDate;
@@ -14,12 +15,22 @@ public class Sprint
 
     public Sprint(string name, DateTime startDate, DateTime endDate)
     {
-        _status = SprintStatus.Provisioned;
+        _sprintState = new SprintProvisionedState(this);
         _name = name;
         _startDate = startDate;
         _endDate = endDate;
         _created = DateTime.Now;
         _sprintBacklog = new Backlog();
         _review = new Review();
+    }
+
+    public void SetState(ISprintState state)
+    {
+        _sprintState = state;
+    }
+
+    public ISprintState GetState()
+    {
+        return _sprintState;
     }
 }
