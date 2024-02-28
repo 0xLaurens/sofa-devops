@@ -2,35 +2,43 @@ using Domain.Sprint;
 
 namespace Domain.Activity;
 
-public class ActivityTestedState: IActivityState
+public class ActivityTestedState : IActivityState
 {
-    public void SetTodo(IActivityContext context)
+    private IActivityContext _context;
+
+    public ActivityTestedState(IActivityContext context)
     {
-        throw new NotImplementedException();
+        _context = context;
     }
 
-    public void SetDoing(IActivityContext context)
+    public void SetTodo()
     {
-        throw new NotImplementedException();
+        _context.SetState(new ActivityTodoState(_context));
     }
 
-    public void SetReady(IActivityContext context)
+    public void SetDoing()
     {
-        throw new NotImplementedException();
+        _context.SetState(new ActivityDoingState(_context));
     }
 
-    public void SetTesting(IActivityContext context)
+    public void SetReady()
     {
-        throw new NotImplementedException();
+        _context.SetState(new ActivityReadyState(_context));
     }
 
-    public void SetTested(IActivityContext context)
+    public void SetTesting()
     {
-        throw new NotImplementedException();
+        _context.SetState(new ActivityTestingState(_context));
     }
 
-    public void SetDone(IActivityContext context)
+    public void SetTested()
     {
-        throw new NotImplementedException();
+        throw new InvalidOperationException("Activity was already tested!");
     }
+
+    public void SetDone()
+    {
+        _context.SetState(new ActivityDoneState(_context));
+    }
+
 }

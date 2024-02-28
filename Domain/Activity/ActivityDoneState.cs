@@ -2,35 +2,43 @@ using Domain.Sprint;
 
 namespace Domain.Activity;
 
-public class ActivityDoneState: IActivityState
+public class ActivityDoneState : IActivityState
 {
-    public void SetTodo(IActivityContext context)
+    private IActivityContext _context;
+
+    public ActivityDoneState(IActivityContext context)
     {
-        throw new NotImplementedException();
+        _context = context;
     }
 
-    public void SetDoing(IActivityContext context)
+    public void SetTodo()
     {
-        throw new NotImplementedException();
+        _context.SetState(new ActivityTodoState(_context));
     }
 
-    public void SetReady(IActivityContext context)
+    public void SetDoing()
     {
-        throw new NotImplementedException();
+        _context.SetState(new ActivityDoingState(_context));
     }
 
-    public void SetTesting(IActivityContext context)
+    public void SetReady()
     {
-        throw new NotImplementedException();
+        _context.SetState(new ActivityReadyState(_context));
     }
 
-    public void SetTested(IActivityContext context)
+    public void SetTesting()
     {
-        throw new NotImplementedException();
+        _context.SetState(new ActivityTestingState(_context));
     }
 
-    public void SetDone(IActivityContext context)
+    public void SetTested()
     {
-        throw new NotImplementedException();
+        _context.SetState(new ActivityTestedState(_context));
     }
+
+    public void SetDone()
+    {
+        throw new InvalidOperationException("Activity is already done!");
+    }
+
 }

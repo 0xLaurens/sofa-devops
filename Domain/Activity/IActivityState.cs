@@ -3,15 +3,15 @@ namespace Domain.Sprint;
 public interface IActivityState
 {
     // Todo
-    public void SetTodo(IActivityContext context);
+    public void SetTodo();
     // Doing
-    public void SetDoing(IActivityContext context);
+    public void SetDoing();
     // Ready
-    public void SetReady(IActivityContext context);
+    public void SetReady();
     // Testing
-    public void SetTesting(IActivityContext context);
+    public void SetTesting();
     // Tested
-    public void SetTested(IActivityContext context);
+    public void SetTested();
     // Done
-    public void SetDone(IActivityContext context);
+    public void SetDone();
 }
