@@ -1,4 +1,4 @@
-namespace Domain;
+namespace Domain.Pipeline;
 
 public class Pipeline
 {
