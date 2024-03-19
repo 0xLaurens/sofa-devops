@@ -3,7 +3,7 @@ namespace Domain.Report;
 public class Report
 {
     private IExportStrategy _exportStrategy;
-    private List<User> _users;
+    private List<IUser> _users;
     private Burndownchart _burndownChart;
     private Footer _footer;
     private Header _header;

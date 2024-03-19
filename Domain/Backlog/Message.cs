@@ -2,6 +2,6 @@ namespace Domain;
 
 public class Message
 {
-    private User _user;
+    private IUser _user;
     private string _text;
 }
