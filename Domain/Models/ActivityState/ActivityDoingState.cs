@@ -10,10 +10,7 @@ public class ActivityDoingState: IActivityState
         _context = context;
     }
 
-    public void Accept(IVisitor visitor)
-    {
-        throw new NotImplementedException();
-    }
+  
 
     public void SetTodo()
     {

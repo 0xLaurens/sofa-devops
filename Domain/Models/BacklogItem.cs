@@ -6,19 +6,42 @@ namespace Domain.Models;
 public class BacklogItem
 {
     // TODO: consider visitor pattern to check the activity their status to change the parents status. 
-    private IVisitor _visitor;
+
     private List<Models.Activity> _activities;
     private List<Thread> _threads;
 
     
     //TODO: visitor pattern should combine the states of the different activities.
-    public IActivityState GetState()
+    public BacklogItemState GetState()
     {
-        foreach (var activity in _activities)
+        
+    
+
+        // Dictionary to map IActivityState to BacklogItemState
+        Dictionary<Type, BacklogItemState> stateMap = new Dictionary<Type, BacklogItemState>
         {
-            _visitor.Visit(activity);     
+            { typeof(ActivityTodoState), BacklogItemState.Todo },
+            { typeof(ActivityDoingState), BacklogItemState.Doing },
+            { typeof(ActivityReadyState), BacklogItemState.Ready },
+            { typeof(ActivityTestingState), BacklogItemState.Testing },
+            { typeof(ActivityTestedState), BacklogItemState.Tested },
+            { typeof(ActivityDoneState), BacklogItemState.Done }
+        };
+        
+        
+        
+        foreach (BacklogItemState state in Enum.GetValues(typeof(BacklogItemState)))
+        {
+            if (_activities.Any(activity => stateMap[activity.GetState().GetType()] == state))
+                return state;
         }
 
-        return new ActivityDoingState();
+       
+
+        // If no activity is found, return the default state (Done)
+        return BacklogItemState.Done;
     }
+
+
+
 }
