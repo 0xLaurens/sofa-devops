@@ -14,11 +14,6 @@ public class BacklogItem
     //TODO: visitor pattern should combine the states of the different activities.
     public IActivityState GetState()
     {
-        foreach (var activity in _activities)
-        {
-            _visitor.Visit(activity);     
-        }
-
-        return new ActivityDoingState();
+        throw new NotImplementedException();
     }
 }
