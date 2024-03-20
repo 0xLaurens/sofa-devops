@@ -23,9 +23,9 @@ public class ActivityTestedState : IActivityState
         _context.SetState(new ActivityDoingState(_context));
     }
 
-    public void SetReady()
+    public void SetReadyForTesting()
     {
-        _context.SetState(new ActivityReadyState(_context));
+        _context.SetState(new ActivityReadyForTestingState(_context));
     }
 
     public void SetTesting()

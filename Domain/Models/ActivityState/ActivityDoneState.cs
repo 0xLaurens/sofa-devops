@@ -15,27 +15,27 @@ public class ActivityDoneState : IActivityState
 
     public void SetTodo()
     {
-        _context.SetState(new ActivityTodoState(_context));
+        throw new InvalidOperationException("Activity is already done!");
     }
 
     public void SetDoing()
     {
-        _context.SetState(new ActivityDoingState(_context));
+        throw new InvalidOperationException("Activity is already done!");
     }
 
-    public void SetReady()
+    public void SetReadyForTesting()
     {
-        _context.SetState(new ActivityReadyState(_context));
+        throw new InvalidOperationException("Activity is already done!");
     }
 
     public void SetTesting()
     {
-        _context.SetState(new ActivityTestingState(_context));
+        throw new InvalidOperationException("Activity is already done!");
     }
 
     public void SetTested()
     {
-        _context.SetState(new ActivityTestedState(_context));
+        throw new InvalidOperationException("Activity is already done!");
     }
 
     public void SetDone()
