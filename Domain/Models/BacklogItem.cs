@@ -10,6 +10,11 @@ public class BacklogItem
     private List<Models.Activity> _activities;
     private List<Thread> _threads;
 
+    public BacklogItem()
+    {
+        this._activities = new List<Activity>();
+    }
+
     
     //TODO: visitor pattern should combine the states of the different activities.
     public BacklogItemState GetState()
@@ -19,7 +24,7 @@ public class BacklogItem
         {
             { typeof(ActivityTodoState), BacklogItemState.Todo },
             { typeof(ActivityDoingState), BacklogItemState.Doing },
-            { typeof(ActivityReadyState), BacklogItemState.Ready },
+            { typeof(ActivityReadyForTestingState), BacklogItemState.Ready },
             { typeof(ActivityTestingState), BacklogItemState.Testing },
             { typeof(ActivityTestedState), BacklogItemState.Tested },
             { typeof(ActivityDoneState), BacklogItemState.Done }
@@ -37,5 +42,10 @@ public class BacklogItem
 
         // If no activity is found, return the default state (Done)
         return BacklogItemState.Done;
+    }
+
+    public List<Models.Activity> getActivities()
+    {
+        return _activities;
     }
 }

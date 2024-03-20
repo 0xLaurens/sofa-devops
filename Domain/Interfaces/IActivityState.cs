@@ -8,7 +8,7 @@ public interface IActivityState
     // Doing
     public void SetDoing();
     // Ready
-    public void SetReady();
+    public void SetReadyForTesting();
     // Testing
     public void SetTesting();
     // Tested

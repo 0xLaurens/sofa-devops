@@ -2,11 +2,11 @@ using Domain.Interfaces;
 
 namespace Domain.Activity;
 
-public class ActivityReadyState : IActivityState
+public class ActivityReadyForTestingState : IActivityState
 {
     private IActivityContext _context;
 
-    public ActivityReadyState(IActivityContext context)
+    public ActivityReadyForTestingState(IActivityContext context)
     {
         _context = context;
     }
@@ -23,10 +23,10 @@ public class ActivityReadyState : IActivityState
         _context.SetState(new ActivityDoingState(_context));
     }
 
-    public void SetReady()
+    public void SetReadyForTesting()
     {
         
-        throw new InvalidOperationException("Activity is already ready!");
+        throw new InvalidOperationException("Activity is already ready for testing!");
     }
 
     public void SetTesting()
@@ -36,12 +36,12 @@ public class ActivityReadyState : IActivityState
 
     public void SetTested()
     {
-        _context.SetState(new ActivityTestedState(_context));
+        throw new InvalidOperationException("Set the activity state to Testing first!");
     }
 
     public void SetDone()
     {
-        _context.SetState(new ActivityDoneState(_context));
+        throw new InvalidOperationException("Set the activity state to Testing first!");
     }
 
 }

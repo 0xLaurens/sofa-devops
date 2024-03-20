@@ -22,23 +22,24 @@ public class ActivityDoingState: IActivityState
         throw new InvalidOperationException("Already doing this activity!");
     }
 
-    public void SetReady()
+    public void SetReadyForTesting()
     {
-        _context.SetState(new ActivityReadyState(_context));
+        _context.SetState(new ActivityReadyForTestingState(_context));
     }
 
     public void SetTesting()
     {
         _context.SetState(new ActivityTestingState(_context));
+        throw new InvalidOperationException("Set the activity state to Ready For Testing first!");
     }
 
     public void SetTested()
     {
-        _context.SetState(new ActivityTestedState(_context));
+        throw new InvalidOperationException("Set the activity state to Ready For Testing first!");
     }
 
     public void SetDone()
     {
-        _context.SetState(new ActivityDoneState(_context));
+        throw new InvalidOperationException("Set the activity state to Ready For Testing first!");
     }
 }

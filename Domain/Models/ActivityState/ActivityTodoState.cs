@@ -22,24 +22,24 @@ public class ActivityTodoState: IActivityState
         _context.SetState(new ActivityDoingState(_context));
     }
 
-    public void SetReady()
+    public void SetReadyForTesting()
     {
-        _context.SetState(new ActivityReadyState(_context));
+        throw new InvalidOperationException("Set the activity state to Doing first!");
     }
 
     public void SetTesting()
     {
-        _context.SetState(new ActivityTestingState(_context));
+        throw new InvalidOperationException("Set the activity state to Doing first!");
     }
 
     public void SetTested()
     {
-        _context.SetState(new ActivityTestedState(_context));
+        throw new InvalidOperationException("Set the activity state to Doing first!");
     }
 
     public void SetDone()
     {
-        _context.SetState(new ActivityDoneState(_context));
+        throw new InvalidOperationException("Set the activity state to Doing first!");
     }
 
 }
