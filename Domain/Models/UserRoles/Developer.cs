@@ -1,6 +1,6 @@
-namespace Domain.Models.User;
+namespace Domain.Models.UserRoles;
 
-public class Developer: User
+public class Developer: User.User
 {
     public Developer(string username, string email) : base(username, email)
     {
