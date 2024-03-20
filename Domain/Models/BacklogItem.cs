@@ -14,9 +14,6 @@ public class BacklogItem
     //TODO: visitor pattern should combine the states of the different activities.
     public BacklogItemState GetState()
     {
-        
-    
-
         // Dictionary to map IActivityState to BacklogItemState
         Dictionary<Type, BacklogItemState> stateMap = new Dictionary<Type, BacklogItemState>
         {
@@ -41,7 +38,4 @@ public class BacklogItem
         // If no activity is found, return the default state (Done)
         return BacklogItemState.Done;
     }
-
-
-
 }
