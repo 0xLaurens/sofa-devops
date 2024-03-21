@@ -2,15 +2,8 @@ using Domain.Interfaces;
 
 namespace Domain.Models.SprintState;
 
-public class SprintActiveState: ISprintState
+public class SprintActiveState(ISprintContext sprintContext) : ISprintState
 {
-    private ISprintContext _sprintContext;
-    
-    public SprintActiveState(ISprintContext sprintContext)
-    {
-        _sprintContext = sprintContext;
-    } 
-    
     public void StartSprint()
     {
         throw new InvalidOperationException("Sprint is already active!");
@@ -18,6 +11,6 @@ public class SprintActiveState: ISprintState
 
     public void FinishSprint()
     {
-       _sprintContext.SetState(new SprintFinishedState(_sprintContext)); 
+       sprintContext.SetState(new SprintFinishedState(sprintContext)); 
     }
 }
