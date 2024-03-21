@@ -17,11 +17,11 @@ public class BacklogItemState
         
         Activity activity2 = new Activity();
         activity2.SetState(new Domain.Activity.ActivityDoingState(activity));
-        activity2.GetState().SetTesting();
+        activity2.GetState().SetReadyForTesting();
         
         Activity activity3 = new Activity();
         activity3.SetState(new Domain.Activity.ActivityDoingState(activity));
-        activity3.GetState().SetTesting();
+        activity3.GetState().SetReadyForTesting();
         
         Activity activity4 = new Activity();
         activity4.SetState(new Domain.Activity.ActivityTestedState(activity));
@@ -36,12 +36,4 @@ public class BacklogItemState
         
         Assert.That(item.GetState(), Is.EqualTo(Domain.Models.BacklogItemState.Doing));
     }
-
-    [Test]
-    public void BacklogItem_GetState_Ready_Failed()
-    {
-        
-    }
-    
-    
 }
