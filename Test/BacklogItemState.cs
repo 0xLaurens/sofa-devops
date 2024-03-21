@@ -4,7 +4,7 @@ using Domain.Models;
 
 namespace Test;
 
-public class BacklogItemStateTest
+public class BacklogItemState
 {
     [Test]
     public void BacklogItem_GetState()
@@ -34,7 +34,7 @@ public class BacklogItemStateTest
 
         item.GetState();
         
-        Assert.That(item.GetState(), Is.EqualTo(BacklogItemState.Doing));
+        Assert.That(item.GetState(), Is.EqualTo(Domain.Models.BacklogItemState.Doing));
     }
 
     [Test]
