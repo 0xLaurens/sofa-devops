@@ -1,8 +1,3 @@
 namespace Domain.Models.UserRoles;
 
-public class LeadDeveloper: User.User
-{
-    public LeadDeveloper(string username, string email) : base(username, email)
-    {
-    }
-}
+public class LeadDeveloper(string username, string email) : User(username, email);
