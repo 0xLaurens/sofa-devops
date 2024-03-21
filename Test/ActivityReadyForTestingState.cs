@@ -1,4 +1,3 @@
-using Domain.Activity;
 using Domain.Interfaces;
 using Domain.Models;
 
@@ -22,7 +21,7 @@ public class ActivityReadyForTestingState
         Activity activity = new Activity();
         activity.SetState(new Domain.Activity.ActivityReadyForTestingState(activity));
         activity.GetState().SetTodo();
-        Assert.That(activity.GetState().GetType(), Is.EqualTo(typeof(ActivityTodoState)));
+        Assert.That(activity.GetState().GetType(), Is.EqualTo(typeof(Domain.Activity.ActivityTodoState)));
     }
     
     [Test]
@@ -54,7 +53,7 @@ public class ActivityReadyForTestingState
         activity.SetState(new Domain.Activity.ActivityReadyForTestingState(activity));
         activity.GetState().SetTesting();
         
-        Assert.That(activity.GetState().GetType(), Is.EqualTo(typeof(ActivityTestingState)));
+        Assert.That(activity.GetState().GetType(), Is.EqualTo(typeof(Domain.Activity.ActivityTestingState)));
     }
     
     [Test]
@@ -65,7 +64,5 @@ public class ActivityReadyForTestingState
         activity.SetState(new Domain.Activity.ActivityReadyForTestingState(activity));
         
         Assert.Throws<InvalidOperationException>(() => activity.GetState().SetDone());
-        
-
     }
 }

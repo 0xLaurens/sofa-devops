@@ -67,8 +67,6 @@ public class ActivityTestedState
         
         activity.SetState(new Domain.Activity.ActivityTestedState(activity));
         activity.GetState().SetDone();
-        Assert.That(activity.GetState().GetType(), Is.EqualTo(typeof(ActivityDoneState)));
-        
-
+        Assert.That(activity.GetState().GetType(), Is.EqualTo(typeof(Domain.Activity.ActivityDoneState)));
     }
 }
