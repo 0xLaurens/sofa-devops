@@ -1,24 +1,10 @@
-namespace Domain.Models.User;
+namespace Domain.Models;
 
 // TEMPLATE PATTERN
-public abstract class User
+public abstract class User(string username, string email)
 {
-    private string _username;
-    private string _email;
-
-    public User(string username, string email)
-    {
-        _username = email;
-        _email = email;
-    }
-
-    public string GetUsername()
-    {
-        return _username;
-    }
-
-    public string GetEmail()
-    {
-        return _email;
-    }
+    public string GetUsername() => username;
+    public string GetEmail() => email;
+    
+    
 }

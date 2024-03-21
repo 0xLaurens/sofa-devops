@@ -1,8 +1,3 @@
 namespace Domain.Models.UserRoles;
 
-public class ProductOwner: User.User
-{
-    public ProductOwner(string username, string email) : base(username, email)
-    {
-    }
-}
+public class ProductOwner(string username, string email) : User(username, email);
