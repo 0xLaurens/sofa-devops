@@ -2,18 +2,11 @@ using Domain.Interfaces;
 
 namespace Domain.Models.SprintState;
 
-public class SprintProvisionedState : ISprintState
+public class SprintProvisionedState(ISprintContext sprintContext) : ISprintState
 {
-    private ISprintContext _sprintContext;
-
-    public SprintProvisionedState(ISprintContext sprintContext)
-    {
-        _sprintContext = sprintContext;
-    }
-
     public void StartSprint()
     {
-        _sprintContext.SetState(new SprintActiveState(_sprintContext));
+        sprintContext.SetState(new SprintActiveState(sprintContext));
     }
 
     public void FinishSprint()
