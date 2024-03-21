@@ -42,7 +42,7 @@ public class ActivityTestingState
         
         activity.SetState(new Domain.Activity.ActivityTestingState(activity));
         activity.GetState().SetTested();
-        Assert.That(activity.GetState().GetType(), Is.EqualTo(typeof(ActivityTestedState)));
+        Assert.That(activity.GetState().GetType(), Is.EqualTo(typeof(Domain.Activity.ActivityTestedState)));
         
     }
     
