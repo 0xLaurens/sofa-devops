@@ -6,20 +6,24 @@ public class ActivityReadyForTestingState : IActivityState
 {
     private IActivityContext _context;
 
+
     public ActivityReadyForTestingState(IActivityContext context)
     {
         _context = context;
+        
     }
 
    
 
     public void SetTodo()
     {
+     
         _context.SetState(new ActivityTodoState(_context));
     }
 
     public void SetDoing()
     {
+      
         _context.SetState(new ActivityDoingState(_context));
     }
 
@@ -31,6 +35,7 @@ public class ActivityReadyForTestingState : IActivityState
 
     public void SetTesting()
     {
+        
         _context.SetState(new ActivityTestingState(_context));
     }
 

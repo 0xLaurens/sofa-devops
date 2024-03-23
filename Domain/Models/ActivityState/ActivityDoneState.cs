@@ -5,10 +5,12 @@ namespace Domain.Activity;
 public class ActivityDoneState : IActivityState
 {
     private IActivityContext _context;
+  
 
     public ActivityDoneState(IActivityContext context)
     {
         _context = context;
+        
     }
 
   

@@ -65,4 +65,50 @@ public class ActivityReadyForTestingState
         
         Assert.Throws<InvalidOperationException>(() => activity.GetState().SetDone());
     }
+    
+    [Test]
+    public void ActivityDoing_NotifyEmail()
+    {
+        IActivityContext activity = new Activity();
+
+
+        activity.Subscribe(new EmailNotificationSubscriber());
+        
+        using (StringWriter sw = new StringWriter())
+        {
+            Console.SetOut(sw);
+
+            // Act
+            activity.SetState(new Domain.Activity.ActivityReadyForTestingState(activity));
+
+            // Assert
+            string expectedOutput = $"Sending email notification\r\n";
+                            
+            Assert.AreEqual(expectedOutput, sw.ToString());
+        }
+        
+    }
+    
+    [Test]
+    public void ActivityDoing_NotifyWhatsapp()
+    {
+        IActivityContext activity = new Activity();
+
+
+        activity.Subscribe(new WhatsappNotificationSubscriber());
+        
+        using (StringWriter sw = new StringWriter())
+        {
+            Console.SetOut(sw);
+
+            // Act
+            activity.SetState(new Domain.Activity.ActivityReadyForTestingState(activity));
+
+            // Assert
+            string expectedOutput = $"Sending whatsapp notification\r\n";
+                            
+            Assert.AreEqual(expectedOutput, sw.ToString());
+        }
+        
+    }
 }
