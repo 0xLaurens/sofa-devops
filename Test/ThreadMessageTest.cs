@@ -56,4 +56,45 @@ public class ThreadMessageTest
         var expectedOutput = $"Sending whatsapp notification: {msg}";
         Assert.That(sw.ToString().Replace(System.Environment.NewLine, string.Empty), Is.EqualTo(expectedOutput));
     }
+
+    // TC21: comment on a active thread
+    [Test]
+    public void Thread_ActiveSprint_AddCommentToActiveThread()
+    {
+        // Arrange
+        var ctx = new Mock<ISprintContext>();
+        ctx.Setup(x => x.GetState()).Returns(new Domain.Models.SprintState.SprintActiveState(ctx.Object));
+
+        var thread = new Thread(ctx.Object);
+        var user = new Developer("Henricus", "hericus@dev.com");
+        var msg = new Message(user, "Hello", new DateTime(2024, 03, 23));
+
+        var sw = new StringWriter();
+        Console.SetOut(sw);
+
+        // Act
+        Assert.DoesNotThrow(() => thread.AddMessage(msg));
+    }
+
+    // TC22: comment on a closed finished sprint thread
+    [Test]
+    public void Thread_FinishedSprint_InvalidOperationException()
+    {
+        // Arrange
+        var ctx = new Mock<ISprintContext>();
+        ctx.Setup(x => x.GetState()).Returns(new Domain.Models.SprintState.SprintFinishedState(ctx.Object));
+
+        var thread = new Thread(ctx.Object);
+        var user = new Developer("Henricus", "hericus@dev.com");
+        var msg = new Message(user, "Hello", new DateTime(2024, 03, 23));
+
+        var sw = new StringWriter();
+        Console.SetOut(sw);
+
+        // Act
+        var exception = Assert.Throws<InvalidOperationException>(() => thread.AddMessage(msg));
+        
+        // Assert
+        Assert.That(exception?.Message, Is.EqualTo("Cannot alter the thread of a finished sprint"));
+    }
 }

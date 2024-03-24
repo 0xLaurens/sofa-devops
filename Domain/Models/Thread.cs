@@ -14,7 +14,7 @@ public class Thread(ISprintContext sprint)
         
         if (sprint.GetState().GetType() == typeof(SprintFinishedState))
         {
-            throw new Exception("Cannot alter the thread of a finished sprint");
+            throw new InvalidOperationException("Cannot alter the thread of a finished sprint");
         }
 
         _messages.Add(msg);
@@ -25,7 +25,7 @@ public class Thread(ISprintContext sprint)
     {
         if (sprint.GetState().GetType() == typeof(SprintFinishedState))
         {
-            throw new Exception("Cannot alter the thread of a finished sprint");
+            throw new InvalidOperationException("Cannot alter the thread of a finished sprint");
         }
 
         _messages.Remove(msg);
