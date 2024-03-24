@@ -58,9 +58,14 @@ public class BacklogItem : IBacklogItemContext
         return _activities;
     }
 
-    public void AddTread(Thread thread)
+    public void AddThread(Thread thread)
     {
         _threads.Add(thread);
+    }
+    
+    public List<Thread> GetThreads()
+    {
+        return _threads;
     }
 
     public void RemoveThread(Thread thread)
