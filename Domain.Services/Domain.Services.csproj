@@ -11,8 +11,4 @@
       <Folder Include="Services.Inf\" />
     </ItemGroup>
 
-    <ItemGroup>
-      <PackageReference Include="Moq" Version="4.20.70" />
-    </ItemGroup>
-
 </Project>
