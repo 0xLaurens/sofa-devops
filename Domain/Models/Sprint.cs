@@ -1,9 +1,9 @@
 using Domain.Interfaces;
-using Domain.Models;
 using Domain.Models.SprintState;
 
+namespace Domain.Models;
 
-public class Sprint: ISprintContext
+public abstract class Sprint: ISprintContext
 {
     private ISprintState _sprintState; 
     
@@ -14,7 +14,7 @@ public class Sprint: ISprintContext
     private DateTime _created;
     private Backlog _sprintBacklog;
 
-    public Sprint(string name, DateTime startDate, DateTime endDate)
+    protected Sprint(string name, DateTime startDate, DateTime endDate)
     {
         _sprintState = new SprintProvisionedState(this);
         _name = name;
@@ -33,5 +33,20 @@ public class Sprint: ISprintContext
     public ISprintState GetState()
     {
         return _sprintState;
+    }
+    
+    public void AddBacklogItem(BacklogItem item)
+    {
+        _sprintBacklog?.AddBacklogItem(item);
+    }
+    
+    public void RemoveBacklogItem(BacklogItem item)
+    {
+        _sprintBacklog?.RemoveBacklogItem(item);
+    }
+
+    public void GenerateReport()
+    {
+        
     }
 }

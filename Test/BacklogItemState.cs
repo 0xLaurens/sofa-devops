@@ -9,28 +9,28 @@ public class BacklogItemState
     [Test]
     public void BacklogItem_GetState()
     {
-        BacklogItem item = new BacklogItem();
+        var item = new BacklogItem();
         
-        Activity activity = new Activity();
+        var activity = new Activity();
         activity.SetState(new Domain.Activity.ActivityTodoState(activity));
         activity.GetState().SetDoing();
         
-        Activity activity2 = new Activity();
+        var activity2 = new Activity();
         activity2.SetState(new Domain.Activity.ActivityDoingState(activity));
         activity2.GetState().SetReadyForTesting();
         
-        Activity activity3 = new Activity();
+        var activity3 = new Activity();
         activity3.SetState(new Domain.Activity.ActivityDoingState(activity));
         activity3.GetState().SetReadyForTesting();
         
-        Activity activity4 = new Activity();
+        var activity4 = new Activity();
         activity4.SetState(new Domain.Activity.ActivityTestedState(activity));
         activity4.GetState().SetReadyForTesting();
         
-        item.getActivities().Add(activity);
-        item.getActivities().Add(activity2);
-        item.getActivities().Add(activity3);
-        item.getActivities().Add(activity4);
+        item.AddActivity(activity);
+        item.AddActivity(activity2);
+        item.AddActivity(activity3);
+        item.AddActivity(activity4);
 
         item.GetState();
         
