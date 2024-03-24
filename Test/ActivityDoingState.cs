@@ -1,6 +1,7 @@
 using Domain.Activity;
 using Domain.Interfaces;
 using Domain.Models;
+using Moq;
 
 namespace Test;
 
@@ -29,10 +30,15 @@ public class ActivityDoingState
     public void Activity_SetReadyForTesting()
     {
         IActivityContext activity = new Activity();
+
+       
         
         activity.SetState(new Domain.Activity.ActivityDoingState(activity));
+        
         activity.GetState().SetReadyForTesting();
         Assert.That(activity.GetState().GetType(), Is.EqualTo(typeof(Domain.Activity.ActivityReadyForTestingState)));
+      
+        
     }
     
     [Test]
@@ -66,5 +72,51 @@ public class ActivityDoingState
         Assert.Throws<InvalidOperationException>(() => activity.GetState().SetDone());
         
 
+    }
+
+    [Test]
+    public void ActivityDoing_NotifyEmail()
+    {
+        IActivityContext activity = new Activity();
+
+
+        activity.Subscribe(new EmailNotificationSubscriber());
+        
+       using (StringWriter sw = new StringWriter())
+       {
+           Console.SetOut(sw);
+
+           // Act
+           activity.SetState(new Domain.Activity.ActivityDoingState(activity));
+
+           // Assert
+           string expectedOutput = $"Sending email notification\r\n";
+                            
+           Assert.AreEqual(expectedOutput, sw.ToString());
+       }
+        
+    }
+    
+    [Test]
+    public void ActivityDoing_NotifyWhatsapp()
+    {
+        IActivityContext activity = new Activity();
+
+
+        activity.Subscribe(new WhatsappNotificationSubscriber());
+        
+        using (StringWriter sw = new StringWriter())
+        {
+            Console.SetOut(sw);
+
+            // Act
+            activity.SetState(new Domain.Activity.ActivityDoingState(activity));
+
+            // Assert
+            string expectedOutput = $"Sending whatsapp notification\r\n";
+                            
+            Assert.AreEqual(expectedOutput, sw.ToString());
+        }
+        
     }
 }

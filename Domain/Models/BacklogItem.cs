@@ -14,9 +14,7 @@ public class BacklogItem
     {
         this._activities = new List<Activity>();
     }
-
     
-    //TODO: visitor pattern should combine the states of the different activities.
     public BacklogItemState GetState()
     {
         // Dictionary to map IActivityState to BacklogItemState
@@ -47,5 +45,15 @@ public class BacklogItem
     public List<Models.Activity> getActivities()
     {
         return _activities;
+    }
+
+    public void AddTread(Thread thread)
+    {
+        _threads.Add(thread);
+    }
+
+    public void RemoveThread(Thread thread)
+    {
+        _threads.Remove(thread);
     }
 }

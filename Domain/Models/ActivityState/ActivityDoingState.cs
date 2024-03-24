@@ -5,6 +5,7 @@ namespace Domain.Activity;
 public class ActivityDoingState: IActivityState
 {
     private IActivityContext _context;
+    
     public ActivityDoingState(IActivityContext context)
     {
         _context = context;
@@ -14,6 +15,7 @@ public class ActivityDoingState: IActivityState
 
     public void SetTodo()
     {
+        
         _context.SetState(new ActivityTodoState(_context));
     }
 
@@ -24,12 +26,13 @@ public class ActivityDoingState: IActivityState
 
     public void SetReadyForTesting()
     {
+        
         _context.SetState(new ActivityReadyForTestingState(_context));
     }
 
     public void SetTesting()
     {
-        _context.SetState(new ActivityTestingState(_context));
+        //_context.SetState(new ActivityTestingState(_context));
         throw new InvalidOperationException("Set the activity state to Ready For Testing first!");
     }
 

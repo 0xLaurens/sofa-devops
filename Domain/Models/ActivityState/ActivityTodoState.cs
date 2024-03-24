@@ -5,9 +5,11 @@ namespace Domain.Activity;
 public class ActivityTodoState: IActivityState
 {
     private IActivityContext _context;
+ 
     public ActivityTodoState(IActivityContext context)
     {
         _context = context;
+    
     }
 
    
@@ -19,6 +21,7 @@ public class ActivityTodoState: IActivityState
 
     public void SetDoing()
     {
+     
         _context.SetState(new ActivityDoingState(_context));
     }
 
