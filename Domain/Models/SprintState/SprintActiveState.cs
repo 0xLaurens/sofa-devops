@@ -13,4 +13,9 @@ public class SprintActiveState(ISprintContext sprintContext) : ISprintState
     {
        sprintContext.SetState(new SprintFinishedState(sprintContext)); 
     }
+    
+    public void CreateSprintReview(string description)
+    {
+        throw new InvalidOperationException("Cannot create a sprint review before finishing the sprint!");
+    }
 }

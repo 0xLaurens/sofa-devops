@@ -4,20 +4,20 @@ using Domain.Models.UserRoles;
 
 namespace Domain.Models;
 
-public abstract class Sprint : ISprintContext
+public class Sprint : ISprintContext
 {
     private ISprintState _sprintState;
 
-    private Review _review;
+    private Review? _review;
     private string _name;
     private DateTime _startDate;
     private DateTime _endDate;
     private DateTime _created;
-    private Backlog _sprintBacklog;
+    private readonly Backlog _sprintBacklog;
     private Pipeline _pipeline = new();
-    private List<User> _teamMembers = [];
+    private readonly List<User> _teamMembers = [];
 
-    protected Sprint(string name, DateTime startDate, DateTime endDate)
+    public Sprint(string name, DateTime startDate, DateTime endDate)
     {
         _sprintState = new SprintProvisionedState(this);
         _name = name;
@@ -25,7 +25,6 @@ public abstract class Sprint : ISprintContext
         _endDate = endDate;
         _created = DateTime.Now;
         _sprintBacklog = new Backlog();
-        _review = new Review();
     }
 
     public void SetState(ISprintState state)
@@ -36,6 +35,11 @@ public abstract class Sprint : ISprintContext
     public ISprintState GetState()
     {
         return _sprintState;
+    }
+
+    public void CreateSprintReview(string description)
+    {
+        _review = new Review(description); 
     }
 
     public void AddBacklogItem(BacklogItem item)

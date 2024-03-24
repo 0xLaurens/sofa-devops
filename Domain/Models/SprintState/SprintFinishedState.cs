@@ -15,4 +15,9 @@ public class SprintFinishedState(ISprintContext sprintContext) : ISprintState
     {
         throw new InvalidOperationException("Sprint has already finished!");
     }
+
+    public void CreateSprintReview(string description)
+    {
+        _sprintContext.CreateSprintReview(description); 
+    }
 }

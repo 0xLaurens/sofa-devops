@@ -1,6 +1,5 @@
 namespace Domain.Models;
 
-public class Review
+public class Review(string description)
 {
-    
 }
