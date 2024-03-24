@@ -12,7 +12,7 @@ public class BacklogItem : IBacklogItemContext
     private IBacklogItemState? _previousState;
     private User? _approver;
     private User? _assignedUser;
-    private string _description;
+    private readonly string _description;
 
     public BacklogItem(string description)
     {
@@ -31,6 +31,11 @@ public class BacklogItem : IBacklogItemContext
         {
             throw new InvalidOperationException("User cannot be assigned multiple backlog items.");
         }
+    }
+    
+    public string GetDescription()
+    {
+        return _description;
     }
     
     public User? GetAssignedUser()

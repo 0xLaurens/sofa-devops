@@ -5,16 +5,14 @@ namespace Domain.Models;
 
 public class BacklogItemTestedState(IBacklogItemContext context) : IBacklogItemState
 {
-    private IBacklogItemContext _context = context;
-
     public void LeadDeveloperGuard()
     {
-        if (_context.GetApprover() == null)
+        if (context.GetApprover() == null)
         {
             throw new InvalidOperationException("No approver set for this item.");
         }
         
-        if (_context.GetApprover()?.GetType() != typeof(LeadDeveloper))
+        if (context.GetApprover()?.GetType() != typeof(LeadDeveloper))
         {
             throw new InvalidOperationException("Only Lead Developer can approve the tested phase.");
         }
@@ -23,25 +21,25 @@ public class BacklogItemTestedState(IBacklogItemContext context) : IBacklogItemS
     public void SetTodo()
     {
         LeadDeveloperGuard();
-        _context.SetState(new BacklogItemTodoState(_context));
+        context.SetState(new BacklogItemTodoState(context));
     }
 
     public void SetDoing()
     {
         LeadDeveloperGuard();
-        _context.SetState(new BacklogItemDoingState(_context));
+        context.SetState(new BacklogItemDoingState(context));
     }
 
     public void SetReadyForTesting()
     {
         LeadDeveloperGuard();
-        _context.SetState(new BacklogItemReadyForTestingState(_context));
+        context.SetState(new BacklogItemReadyForTestingState(context));
     }
 
     public void SetTesting()
     {
         LeadDeveloperGuard();
-        _context.SetState(new BacklogItemTestingState(_context));
+        context.SetState(new BacklogItemTestingState(context));
     }
 
     public void SetTested()
@@ -52,6 +50,6 @@ public class BacklogItemTestedState(IBacklogItemContext context) : IBacklogItemS
     public void SetDone()
     {
         LeadDeveloperGuard();
-        _context.SetState(new BacklogItemDoneState(_context));
+        context.SetState(new BacklogItemDoneState(context));
     }
 }

@@ -4,16 +4,14 @@ namespace Domain.Models;
 
 public class BacklogItemReadyForTestingState(IBacklogItemContext context) : IBacklogItemState
 {
-        private IBacklogItemContext _context = context;
-
     public void SetTodo()
     {
-        _context.SetState(new BacklogItemTodoState(_context));
+        context.SetState(new BacklogItemTodoState(context));
     }
 
     public void SetDoing()
     {
-        _context.SetState(new BacklogItemDoingState(_context));
+        context.SetState(new BacklogItemDoingState(context));
     }
 
     public void SetReadyForTesting()
@@ -23,16 +21,16 @@ public class BacklogItemReadyForTestingState(IBacklogItemContext context) : IBac
 
     public void SetTesting()
     {
-        _context.SetState(new BacklogItemTestingState(_context));
+        context.SetState(new BacklogItemTestingState(context));
     }
 
     public void SetTested()
     {
-        _context.SetState(new BacklogItemTestedState(_context));
+        context.SetState(new BacklogItemTestedState(context));
     }
 
     public void SetDone()
     {
-        _context.SetState(new BacklogItemDoneState(_context));
+        context.SetState(new BacklogItemDoneState(context));
     }
 }
