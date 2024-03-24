@@ -7,7 +7,7 @@ public interface IBacklogItemContext
     public void SetState(IBacklogItemState state);
     public IBacklogItemState GetState();
     
-    public IBacklogItemState GetPreviousState();
+    public IBacklogItemState? GetPreviousState();
     
     public void SetApprover(User user);
     public User? GetApprover();

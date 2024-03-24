@@ -1,49 +1,59 @@
+using Domain.Interfaces;
 using Domain.Models;
 using Domain.Models.Notification;
 using Domain.Models.UserRoles;
+using Moq;
 using Thread = Domain.Models.Thread;
 
 namespace Test;
 
 public class ThreadMessageTest
 {
+    // TC14: user selected notification method
     [Test]
-    public void Thread_NotifyEmail()
+    public void Thread_UserSelectsNotificationType_ReceivesEmailNotification()
     {
-        var thread = new Thread();
-        thread.Subscribe(new EmailNotificationSubscriber<Message>());
+        // Arrange
+        var ctx = new Mock<ISprintContext>();
+        ctx.Setup(x => x.GetState()).Returns(new Domain.Models.SprintState.SprintActiveState(ctx.Object));
+
+        var thread = new Thread(ctx.Object);
+        var user = new Developer("Henricus", "Henricus@dev.com");
+        var msg = new Message(user, "Hello", new DateTime(2024, 03, 23));
 
         var sw = new StringWriter();
         Console.SetOut(sw);
 
         // Act
-        var message = new Message(new Developer("developer", "email@developer.nl"), "test message",
-            new DateTime(2024, 03, 23));
-        thread.AddMessage(message);
+        user.SetMsgNotifier(new EmailNotificationSubscriber<Message>());
+        thread.AddMessage(msg);
 
         // Assert
-        var expectedOutput = $"Sending email notification: {message}";
-
+        var expectedOutput = $"Sending email notification: {msg}";
         Assert.That(sw.ToString().Replace(System.Environment.NewLine, string.Empty), Is.EqualTo(expectedOutput));
     }
 
+    // TC14: user selected notification method
     [Test]
-    public void Thread_NotifyWhatsapp()
+    public void Thread_UserSelectsNotificationType_ReceivesWhatsappNotification()
     {
-        var thread = new Thread();
-        thread.Subscribe(new WhatsappNotificationSubscriber<Message>());
-        
+        // Arrange
+        var ctx = new Mock<ISprintContext>();
+        ctx.Setup(x => x.GetState()).Returns(new Domain.Models.SprintState.SprintActiveState(ctx.Object));
+
+        var thread = new Thread(ctx.Object);
+        var user = new Developer("Henricus", "Henricus@dev.com");
+        var msg = new Message(user, "Hello", new DateTime(2024, 03, 23));
+
         var sw = new StringWriter();
         Console.SetOut(sw);
 
         // Act
-        var message = new Message(new ScrumMaster("scrummaster", "email@scrummaster.nl"), "test message",
-            new DateTime(2024, 03, 23));
-        thread.AddMessage(message);
+        user.SetMsgNotifier(new WhatsappNotificationSubscriber<Message>());
+        thread.AddMessage(msg);
 
         // Assert
-        var expectedOutput = $"Sending whatsapp notification: {message}";
-
+        var expectedOutput = $"Sending whatsapp notification: {msg}";
         Assert.That(sw.ToString().Replace(System.Environment.NewLine, string.Empty), Is.EqualTo(expectedOutput));
     }
 }

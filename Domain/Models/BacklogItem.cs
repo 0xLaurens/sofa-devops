@@ -6,11 +6,16 @@ namespace Domain.Models;
 
 public class BacklogItem : IBacklogItemContext
 {
-    private List<Activity> _activities = new();
-    private List<Thread> _threads = [];
+    private readonly List<Activity> _activities = [];
+    private readonly List<Thread> _threads = [];
     private IBacklogItemState _state;
-    private IBacklogItemState _previousState;
-    private User _approver;
+    private IBacklogItemState? _previousState;
+    private User? _approver;
+
+    protected BacklogItem()
+    {
+        _state = new BacklogItemTodoState(this);
+    }
 
     public void AddActivity(Activity activity)
     {
@@ -48,23 +53,23 @@ public class BacklogItem : IBacklogItemContext
         return _state;
     }
 
-    public IBacklogItemState GetPreviousState()
+    public IBacklogItemState? GetPreviousState()
     {
         return _previousState;
     }
 
     public void SetApprover(User user)
     {
-        _approver = user; 
+        _approver = user;
     }
-    
+
     public User GetApprover()
     {
         if (_approver is null)
         {
             throw new Exception("Approver is not set.");
         }
-        
+
         return _approver;
     }
 }
