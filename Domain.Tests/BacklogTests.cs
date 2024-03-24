@@ -9,7 +9,7 @@ public class BacklogTests
     [Test]
     public void Add_BacklogItem()
     {
-        Backlog backlog = new Backlog("Domain.Test Backlog");
+        Backlog backlog = new Backlog("Domain.Tests Backlog");
         BacklogItem backlogItem = new BacklogItem("test user-story");
         backlog.AddBacklogItem(backlogItem);
         

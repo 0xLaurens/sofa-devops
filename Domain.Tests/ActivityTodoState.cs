@@ -11,7 +11,7 @@ public class ActivityTodoState
     public void Activity_SetDoing()
     {
         User user = new Developer("developer", "email@developer.nl");
-        BacklogItem backlogItem = new BacklogItem("Domain.Test backlog");
+        BacklogItem backlogItem = new BacklogItem("Domain.Tests backlog");
         IActivityContext activity = new Activity("test activity", user, backlogItem);
         activity.SetState(new Domain.Activity.ActivityTodoState(activity));
         activity.GetState().SetDoing();
@@ -22,7 +22,7 @@ public class ActivityTodoState
     public void Activity_SetTodo()
     {
         User user = new Developer("developer", "email@developer.nl");
-        BacklogItem backlogItem = new BacklogItem("Domain.Test backlog");
+        BacklogItem backlogItem = new BacklogItem("Domain.Tests backlog");
         Activity activity = new Activity("test activity", user, backlogItem);
         
         activity.SetState(new Domain.Activity.ActivityTodoState(activity));
@@ -33,7 +33,7 @@ public class ActivityTodoState
     public void Activity_SetReadyForTesting()
     {
         User user = new Developer("developer", "email@developer.nl");
-        BacklogItem backlogItem = new BacklogItem("Domain.Test backlog");
+        BacklogItem backlogItem = new BacklogItem("Domain.Tests backlog");
         IActivityContext activity = new Activity("test activity", user, backlogItem);
         activity.SetState(new Domain.Activity.ActivityTodoState(activity));
         Assert.Throws<InvalidOperationException>(() => activity.GetState().SetReadyForTesting());
@@ -43,7 +43,7 @@ public class ActivityTodoState
     public void Activity_SetTested()
     {
         User user = new Developer("developer", "email@developer.nl");
-        BacklogItem backlogItem = new BacklogItem("Domain.Test backlog");
+        BacklogItem backlogItem = new BacklogItem("Domain.Tests backlog");
         IActivityContext activity = new Activity("test activity", user, backlogItem);
         activity.SetState(new Domain.Activity.ActivityTodoState(activity));
 
@@ -54,7 +54,7 @@ public class ActivityTodoState
     public void Activity_SetTesting()
     {
         User user = new Developer("developer", "email@developer.nl");
-        BacklogItem backlogItem = new BacklogItem("Domain.Test backlog");
+        BacklogItem backlogItem = new BacklogItem("Domain.Tests backlog");
         IActivityContext activity = new Activity("test activity", user, backlogItem);
         activity.SetState(new Domain.Activity.ActivityTodoState(activity));
         Assert.Throws<InvalidOperationException>(() => activity.GetState().SetTesting());
@@ -64,7 +64,7 @@ public class ActivityTodoState
     public void Activity_SetDone()
     {
         var user = new Developer("developer", "email@developer.nl");
-        var backlogItem = new BacklogItem("Domain.Test backlog");
+        var backlogItem = new BacklogItem("Domain.Tests backlog");
         var activity = new Activity("test, activity", user, backlogItem);
         activity.SetState(new Domain.Activity.ActivityTodoState(activity));
 
@@ -75,7 +75,7 @@ public class ActivityTodoState
     public void ActivityDoing_NotifyEmail()
     {
         var user = new Developer("developer", "email@developer.nl");
-        var backlogItem = new BacklogItem("Domain.Test backlog");
+        var backlogItem = new BacklogItem("Domain.Tests backlog");
         var activity = new Activity("test activity", user, backlogItem);
         activity.Subscribe(new EmailNotificationSubscriber<IActivityContext>());
 
@@ -94,7 +94,7 @@ public class ActivityTodoState
     public void ActivityDoing_NotifyWhatsapp()
     {
         var user = new Developer("developer", "email@developer.nl");
-        var backlogItem = new BacklogItem("Domain.Test backlog");
+        var backlogItem = new BacklogItem("Domain.Tests backlog");
         var activity = new Activity("test activity", user, backlogItem);
         
         activity.Subscribe(new WhatsappNotificationSubscriber<IActivityContext>());

@@ -14,7 +14,7 @@ public class PipelineTests
         // act
         var pipeline = new Pipeline();
         var buildPhase = new BuildPhase("Build frontend");
-        var testPhase = new Mock<TestPhase>("Domain.Test frontend");
+        var testPhase = new Mock<TestPhase>("Domain.Tests frontend");
         var deployPhase = new Mock<DeploymentPhase>("Deploy frontend");
         var packagePhase = new Mock<PackagePhase>("Package frontend");
         var utilityPhase = new Mock<UtilityPhase>("Utility frontend");
@@ -45,7 +45,7 @@ public class PipelineTests
         // act
         var pipeline = new Pipeline();
         var buildPhase = new BuildPhase("Build frontend");
-        var testPhase = new TestPhase("Domain.Test frontend");
+        var testPhase = new TestPhase("Domain.Tests frontend");
         var deployPhase = new Mock<DeploymentPhase>("Deploy frontend"); 
 
         // arrange
