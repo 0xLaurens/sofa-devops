@@ -1,6 +1,7 @@
 using Domain.Activity;
 using Domain.Interfaces;
 using Domain.Models;
+using Domain.Models.UserRoles;
 using Moq;
 
 namespace Test;
@@ -10,8 +11,9 @@ public class ActivityDoingState
     [Test]
     public void Activity_SetDoing()
     {
-        IActivityContext activity = new Activity();
-
+        User user = new Developer("developer", "email@developer.nl");
+        BacklogItem backlogItem = new BacklogItem("Test backlog");
+        IActivityContext activity = new Activity("test activity", user, backlogItem);
         activity.SetState(new Domain.Activity.ActivityTodoState(activity));
         activity.GetState().SetDoing();
         Assert.That(activity.GetState().GetType(), Is.EqualTo(typeof(Domain.Activity.ActivityDoingState)));
@@ -20,7 +22,10 @@ public class ActivityDoingState
     [Test]
     public void Activity_SetTodo()
     {
-        Activity activity = new Activity();
+        User user = new Developer("developer", "email@developer.nl");
+        BacklogItem backlogItem = new BacklogItem("Test backlog");
+        IActivityContext activity = new Activity("test activity", user, backlogItem);
+     
         activity.SetState(new Domain.Activity.ActivityDoingState(activity));
         activity.GetState().SetTodo();
         Assert.That(activity.GetState().GetType(), Is.EqualTo(typeof(Domain.Activity.ActivityTodoState)));
@@ -29,9 +34,9 @@ public class ActivityDoingState
     [Test]
     public void Activity_SetReadyForTesting()
     {
-        IActivityContext activity = new Activity();
-
-
+        User user = new Developer("developer", "email@developer.nl");
+        BacklogItem backlogItem = new BacklogItem("Test backlog");
+        IActivityContext activity = new Activity("test activity", user, backlogItem);
         activity.SetState(new Domain.Activity.ActivityDoingState(activity));
 
         activity.GetState().SetReadyForTesting();
@@ -41,8 +46,9 @@ public class ActivityDoingState
     [Test]
     public void Activity_SetTested()
     {
-        IActivityContext activity = new Activity();
-
+        User user = new Developer("developer", "email@developer.nl");
+        BacklogItem backlogItem = new BacklogItem("Test backlog");
+        IActivityContext activity = new Activity("test activity", user, backlogItem);
         activity.SetState(new Domain.Activity.ActivityDoingState(activity));
 
         Assert.Throws<InvalidOperationException>(() => activity.GetState().SetTested());
@@ -51,8 +57,9 @@ public class ActivityDoingState
     [Test]
     public void Activity_SetTesting()
     {
-        IActivityContext activity = new Activity();
-
+        User user = new Developer("developer", "email@developer.nl");
+        BacklogItem backlogItem = new BacklogItem("Test backlog");
+        IActivityContext activity = new Activity("test activity", user, backlogItem);
         activity.SetState(new Domain.Activity.ActivityDoingState(activity));
 
         Assert.Throws<InvalidOperationException>(() => activity.GetState().SetTesting());
@@ -61,8 +68,9 @@ public class ActivityDoingState
     [Test]
     public void Activity_SetDone()
     {
-        IActivityContext activity = new Activity();
-
+        User user = new Developer("developer", "email@developer.nl");
+        BacklogItem backlogItem = new BacklogItem("Test backlog");
+        IActivityContext activity = new Activity("test activity", user, backlogItem);
         activity.SetState(new Domain.Activity.ActivityDoingState(activity));
 
         Assert.Throws<InvalidOperationException>(() => activity.GetState().SetDone());
@@ -71,8 +79,10 @@ public class ActivityDoingState
     [Test]
     public void ActivityDoing_NotifyEmail()
     {
-        IActivityContext activity = new Activity();
-
+        User user = new Developer("developer", "email@developer.nl");
+        BacklogItem backlogItem = new BacklogItem("Test backlog");
+        IActivityContext activity = new Activity("test activity", user, backlogItem);
+       
 
         activity.Subscribe(new EmailNotificationSubscriber());
 
@@ -93,8 +103,10 @@ public class ActivityDoingState
     [Test]
     public void ActivityDoing_NotifyWhatsapp()
     {
-        IActivityContext activity = new Activity();
-
+        User user = new Developer("developer", "email@developer.nl");
+        BacklogItem backlogItem = new BacklogItem("Test backlog");
+        IActivityContext activity = new Activity("test activity", user, backlogItem);
+        
 
         activity.Subscribe(new WhatsappNotificationSubscriber());
 

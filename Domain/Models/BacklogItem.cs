@@ -5,12 +5,14 @@ namespace Domain.Models;
 
 public class BacklogItem
 {
+    private string _description;
     private List<Activity> _activities;
     private List<Thread> _threads = [];
 
-    public BacklogItem()
+    public BacklogItem(string description)
     {
-        this._activities = new List<Activity>();
+        this._activities = new List<IActivityContext>();
+        this._description = description;
     }
     
     public BacklogItemState GetState()
