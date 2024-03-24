@@ -40,15 +40,16 @@ jobs:
         run: |
           New-Item -Path .\.sonar\scanner -ItemType Directory
           dotnet tool update dotnet-sonarscanner --tool-path .\.sonar\scanner
-      - name: install opencover
-        run: dotnet tool install --global coverlet.console 
+      - name: install dotCover
+        run: |
+          dotnet tool install --global JetBrains.dotCover.GlobalTool
       - name: Build and analyze
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: powershell
         run: |
-          .\.sonar\scanner\dotnet-sonarscanner begin /k:"0xLaurens_sofa-devops" /o:"0xlaurens" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"  /d:sonar.cs.vscoveragexml.reportsPaths=**/coverage.xml
-          dotnet build --no-restore
-          dotnet test --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+          .\.sonar\scanner\dotnet-sonarscanner begin /k:"0xLaurens_sofa-devops" /o:"0xlaurens" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.dotcover.reportsPaths=dotCover.Output.html
+          dotnet build -no-incremental
+          dotnet dotcover test --dcReportType=HTML --dcOutput=dotCover.Output.html 
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
