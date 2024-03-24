@@ -44,6 +44,11 @@ public class BacklogItem
     {
         _activities.Remove(activity);
     }
+    
+    public List<Activity> GetActivities()
+    {
+        return _activities;
+    }
 
     public void AddTread(Thread thread)
     {

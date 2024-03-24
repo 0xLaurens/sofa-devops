@@ -1,15 +1,8 @@
 namespace Domain.Models;
 
-public class Message
+public class Message(User user, string text, DateTime created)
 {
-    private User _user;
-    private string _text;
-    private DateTime _created;
-
-    public Message(User user, string text, DateTime created)
-    {
-        _user = user;
-        _text = text;
-        _created = created;
-    }
+    private User _user = user;
+    private string _text = text;
+    private DateTime _created = created;
 }

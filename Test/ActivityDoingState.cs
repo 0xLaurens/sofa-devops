@@ -1,6 +1,7 @@
 using Domain.Activity;
 using Domain.Interfaces;
 using Domain.Models;
+using Domain.Models.Notification;
 using Moq;
 
 namespace Test;

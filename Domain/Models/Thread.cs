@@ -4,14 +4,8 @@ namespace Domain.Models;
 
 public class Thread: IPublisher
 {
-    private List<Message> _messages;
-    private List<ISubscriber> _subscribers = new List<ISubscriber>();
-
-    public Thread()
-    {
-        _messages = new List<Message>();
-        
-    }
+    private readonly List<Message> _messages = [];
+    private readonly List<ISubscriber> _subscribers = [];
 
     public void AddMessage(Message msg)
     {

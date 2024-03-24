@@ -1,3 +1,4 @@
+using Domain.Activity;
 using Domain.Interfaces;
 
 namespace Domain.Models;
@@ -5,7 +6,7 @@ namespace Domain.Models;
 public class Activity: IActivityContext, IPublisher
 {
    private IActivityState _state;
-   private List<ISubscriber> _subscribers = new List<ISubscriber>();
+   private List<ISubscriber> _subscribers = [];
    public void SetState(IActivityState state)
    {
       _state = state;

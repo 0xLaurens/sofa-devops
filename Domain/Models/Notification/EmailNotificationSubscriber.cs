@@ -1,6 +1,6 @@
 using Domain.Interfaces;
 
-namespace Domain.Models;
+namespace Domain.Models.Notification;
 
 public class EmailNotificationSubscriber: ISubscriber
 {

@@ -4,9 +4,6 @@ namespace Domain.Models;
 
 public abstract class Report(List<User> users, IExportStrategy exportStrategy, BurndownChart burndownChart)
 {
-    
-    
-
     public IExportStrategy SetExportStrategy() => exportStrategy;
 
     public List<Domain.Models.User> GetUsers()
@@ -14,16 +11,5 @@ public abstract class Report(List<User> users, IExportStrategy exportStrategy, B
         return users;
     }
 
-  
-
     public abstract void Export();
-
-
-
-
-  
-
-
-
-
 }
