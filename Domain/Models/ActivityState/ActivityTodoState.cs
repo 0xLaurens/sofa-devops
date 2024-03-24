@@ -2,18 +2,8 @@ using Domain.Interfaces;
 
 namespace Domain.Activity;
 
-public class ActivityTodoState: IActivityState
+public class ActivityTodoState(IActivityContext context) : IActivityState
 {
-    private IActivityContext _context;
- 
-    public ActivityTodoState(IActivityContext context)
-    {
-        _context = context;
-    
-    }
-
-   
-
     public void SetTodo()
     {
         throw new InvalidOperationException("Activity is already in the todo");
@@ -21,8 +11,7 @@ public class ActivityTodoState: IActivityState
 
     public void SetDoing()
     {
-     
-        _context.SetState(new ActivityDoingState(_context));
+        context.SetState(new ActivityDoingState(context));
     }
 
     public void SetReadyForTesting()
@@ -44,5 +33,9 @@ public class ActivityTodoState: IActivityState
     {
         throw new InvalidOperationException("Set the activity state to Doing first!");
     }
-
+    
+    public override string ToString()
+    {
+        return "Todo";
+    }
 }

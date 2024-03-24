@@ -45,4 +45,9 @@ public class ActivityDoingState: IActivityState
     {
         throw new InvalidOperationException("Set the activity state to Ready For Testing first!");
     }
+
+    public override string ToString()
+    {
+        return "Doing";
+    }
 }
