@@ -97,4 +97,28 @@ public class ThreadMessageTest
         // Assert
         Assert.That(exception?.Message, Is.EqualTo("Cannot alter the thread of a finished sprint"));
     }
+    
+    // TC23: notification to participants
+    [Test]
+    public void Thread_AddMessage_NotifyParticipants()
+    {
+        // Arrange
+        var ctx = new Mock<ISprintContext>();
+        ctx.Setup(x => x.GetState()).Returns(new Domain.Models.SprintState.SprintActiveState(ctx.Object));
+
+        var thread = new Thread(ctx.Object);
+        var user = new Developer("Henricus", "dev@henricus.com");
+        user.SetMsgNotifier(new EmailNotificationSubscriber<Message>());
+        var msg = new Message(user, "Hello", new DateTime(2024, 03, 23));
+
+        var sw = new StringWriter();
+        Console.SetOut(sw);
+        
+        // Act
+        thread.AddMessage(msg);
+        
+        // Assert
+        var expectedOutput = $"Sending email notification: {msg}";
+        Assert.That(sw.ToString().Replace(System.Environment.NewLine, string.Empty), Is.EqualTo(expectedOutput));
+    }
 }

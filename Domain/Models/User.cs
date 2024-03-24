@@ -6,6 +6,20 @@ namespace Domain.Models;
 public abstract class User(string username, string email)
 {
     private ISubscriber<Message>? _msgNotfier;
+    private BacklogItem? _assignedBacklogItem;
+    
+    
+    public void AssignBacklogItem(BacklogItem backlogItem)
+    {
+        _assignedBacklogItem = backlogItem;
+    }
+    
+    public void UnassignBacklogItem()
+    {
+        _assignedBacklogItem = null;
+    }
+    
+    public bool CanAssignBacklogItem() => _assignedBacklogItem == null;
     
     public void SetMsgNotifier(ISubscriber<Message>? msgNotifier)
     {

@@ -11,10 +11,29 @@ public class BacklogItem : IBacklogItemContext
     private IBacklogItemState _state;
     private IBacklogItemState? _previousState;
     private User? _approver;
+    private User? _assignedUser;
 
-    protected BacklogItem()
+    public BacklogItem()
     {
         _state = new BacklogItemTodoState(this);
+    }
+    
+    public void AssignUser(User user)
+    {
+        if (user.CanAssignBacklogItem())
+        {
+            _assignedUser = user; 
+            user.AssignBacklogItem(this);
+        }
+        else
+        {
+            throw new InvalidOperationException("User cannot be assigned multiple backlog items.");
+        }
+    }
+    
+    public User? GetAssignedUser()
+    {
+        return _assignedUser;
     }
 
     public void AddActivity(Activity activity)
