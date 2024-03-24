@@ -1,5 +1,4 @@
 using Domain.Models;
-using Domain.Models.SprintState;
 using Domain.Models.UserRoles;
 
 namespace Test;
