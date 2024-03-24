@@ -1,50 +1,26 @@
 using Domain.Activity;
 using Domain.Interfaces;
+using Domain.Models.UserRoles;
 
 namespace Domain.Models;
 
-public class BacklogItem
+public class BacklogItem : IBacklogItemContext
 {
-    private List<Activity> _activities;
+    private List<Activity> _activities = new();
     private List<Thread> _threads = [];
-
-    public BacklogItem()
-    {
-        this._activities = new List<Activity>();
-    }
-    
-    public BacklogItemState GetState()
-    {
-        // Dictionary to map IActivityState to BacklogItemState
-        var stateMap = new Dictionary<Type, BacklogItemState>
-        {
-            { typeof(ActivityTodoState), BacklogItemState.Todo },
-            { typeof(ActivityDoingState), BacklogItemState.Doing },
-            { typeof(ActivityReadyForTestingState), BacklogItemState.Ready },
-            { typeof(ActivityTestingState), BacklogItemState.Testing },
-            { typeof(ActivityTestedState), BacklogItemState.Tested },
-            { typeof(ActivityDoneState), BacklogItemState.Done }
-        };
-        
-        foreach (BacklogItemState state in Enum.GetValues(typeof(BacklogItemState)))
-        {
-            if (_activities.Any(activity => stateMap[activity.GetState().GetType()] == state))
-                return state;
-        }
-       
-        return BacklogItemState.Done;
-    }
+    private IBacklogItemState _state;
+    private IBacklogItemState _previousState;
 
     public void AddActivity(Activity activity)
     {
         _activities.Add(activity);
-    } 
-    
+    }
+
     public void RemoveActivity(Activity activity)
     {
         _activities.Remove(activity);
     }
-    
+
     public List<Activity> GetActivities()
     {
         return _activities;
@@ -58,5 +34,26 @@ public class BacklogItem
     public void RemoveThread(Thread thread)
     {
         _threads.Remove(thread);
+    }
+
+    public void SetState(IBacklogItemState state, User user)
+    {
+        if (GetPreviousState().GetType() == typeof(ActivityTestedState) && user.GetType() != typeof(LeadDeveloper))
+        {
+            throw new InvalidOperationException("Only Lead Developer can approve the tested phase.");
+        }
+        
+        _previousState = _state;
+        _state = state;
+    }
+
+    public IBacklogItemState GetState()
+    {
+        return _state;
+    }
+
+    public IBacklogItemState GetPreviousState()
+    {
+        return _previousState;
     }
 }
