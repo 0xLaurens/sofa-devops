@@ -10,6 +10,7 @@ public class BacklogItem : IBacklogItemContext
     private List<Thread> _threads = [];
     private IBacklogItemState _state;
     private IBacklogItemState _previousState;
+    private User _approver;
 
     public void AddActivity(Activity activity)
     {
@@ -36,13 +37,8 @@ public class BacklogItem : IBacklogItemContext
         _threads.Remove(thread);
     }
 
-    public void SetState(IBacklogItemState state, User user)
+    public void SetState(IBacklogItemState state)
     {
-        if (GetPreviousState().GetType() == typeof(ActivityTestedState) && user.GetType() != typeof(LeadDeveloper))
-        {
-            throw new InvalidOperationException("Only Lead Developer can approve the tested phase.");
-        }
-        
         _previousState = _state;
         _state = state;
     }
@@ -55,5 +51,20 @@ public class BacklogItem : IBacklogItemContext
     public IBacklogItemState GetPreviousState()
     {
         return _previousState;
+    }
+
+    public void SetApprover(User user)
+    {
+        _approver = user; 
+    }
+    
+    public User GetApprover()
+    {
+        if (_approver is null)
+        {
+            throw new Exception("Approver is not set.");
+        }
+        
+        return _approver;
     }
 }

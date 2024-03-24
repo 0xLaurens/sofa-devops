@@ -4,35 +4,35 @@ namespace Domain.Models;
 
 public class BacklogItemReadyForTestingState(IBacklogItemContext context) : IBacklogItemState
 {
-    private IBacklogItemContext _context = context;
+        private IBacklogItemContext _context = context;
 
-    public void SetTodo(User user)
+    public void SetTodo()
     {
-        throw new NotImplementedException();
+        _context.SetState(new BacklogItemTodoState(_context));
     }
 
-    public void SetDoing(User user)
+    public void SetDoing()
     {
-        throw new NotImplementedException();
+        _context.SetState(new BacklogItemDoingState(_context));
     }
 
-    public void SetReadyForTesting(User user)
+    public void SetReadyForTesting()
     {
-        throw new NotImplementedException();
+        throw new InvalidOperationException("Item is already in Ready For Testing state");
     }
 
-    public void SetTesting(User user)
+    public void SetTesting()
     {
-        throw new NotImplementedException();
+        _context.SetState(new BacklogItemTestingState(_context));
     }
 
-    public void SetTested(User user)
+    public void SetTested()
     {
-        throw new NotImplementedException();
+        _context.SetState(new BacklogItemTestedState(_context));
     }
 
-    public void SetDone(User user)
+    public void SetDone()
     {
-        throw new NotImplementedException();
+        _context.SetState(new BacklogItemDoneState(_context));
     }
 }

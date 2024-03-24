@@ -1,38 +1,57 @@
 using Domain.Interfaces;
+using Domain.Models.UserRoles;
 
 namespace Domain.Models;
 
-public class BacklogItemTestedState(IBacklogItemContext context): IBacklogItemState
+public class BacklogItemTestedState(IBacklogItemContext context) : IBacklogItemState
 {
     private IBacklogItemContext _context = context;
-    
-    public void SetTodo(User user)
+
+    public void LeadDeveloperGuard()
     {
-        throw new NotImplementedException();
+        if (_context.GetApprover() == null)
+        {
+            throw new InvalidOperationException("No approver set for this item.");
+        }
+        
+        if (_context.GetApprover()?.GetType() != typeof(LeadDeveloper))
+        {
+            throw new InvalidOperationException("Only Lead Developer can approve the tested phase.");
+        }
     }
 
-    public void SetDoing(User user)
+    public void SetTodo()
     {
-        throw new NotImplementedException();
+        LeadDeveloperGuard();
+        _context.SetState(new BacklogItemTodoState(_context));
     }
 
-    public void SetReadyForTesting(User user)
+    public void SetDoing()
     {
-        throw new NotImplementedException();
+        LeadDeveloperGuard();
+        _context.SetState(new BacklogItemDoingState(_context));
     }
 
-    public void SetTesting(User user)
+    public void SetReadyForTesting()
     {
-        throw new NotImplementedException();
+        LeadDeveloperGuard();
+        _context.SetState(new BacklogItemReadyForTestingState(_context));
     }
 
-    public void SetTested(User user)
+    public void SetTesting()
     {
-        throw new NotImplementedException();
+        LeadDeveloperGuard();
+        _context.SetState(new BacklogItemTestingState(_context));
     }
 
-    public void SetDone(User user)
+    public void SetTested()
     {
-        throw new NotImplementedException();
+        throw new InvalidOperationException("Item is already in Tested state");
+    }
+
+    public void SetDone()
+    {
+        LeadDeveloperGuard();
+        _context.SetState(new BacklogItemDoneState(_context));
     }
 }
