@@ -6,6 +6,7 @@ using Moq;
 
 namespace Test;
 
+//TC24: report strategy
 public class ReportExportTests
 {
     [Test]

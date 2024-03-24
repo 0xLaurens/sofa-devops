@@ -1,8 +1,8 @@
 namespace Domain.Interfaces;
 
-public interface IPublisher
+public interface IPublisher<out T>
 {
-    void Subscribe(ISubscriber listener);
-    void Unsubscribe(ISubscriber listener);
+    void Subscribe(ISubscriber<T> listener);
+    void Unsubscribe(ISubscriber<T> listener);
     void Notify();
 }

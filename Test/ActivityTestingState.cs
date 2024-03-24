@@ -1,6 +1,7 @@
 using Domain.Activity;
 using Domain.Interfaces;
 using Domain.Models;
+using Domain.Models.Notification;
 using Domain.Models.UserRoles;
 
 namespace Test;
@@ -75,14 +76,12 @@ public class ActivityTestingState
     }
 
     [Test]
-    public void ActivityDoing_NotifyEmail()
+    public void ActivityTesting_NotifyEmail()
     {
-        User user = new Developer("developer", "email@developer.nl");
-        BacklogItem backlogItem = new BacklogItem("Test backlog");
-        IActivityContext activity = new Activity("test activity", user, backlogItem);
-       
-
-        activity.Subscribe(new EmailNotificationSubscriber());
+        var user = new Developer("developer", "email@developer.nl");
+        var backlogItem = new BacklogItem("Test backlog");
+        var activity = new Activity("test activity", user, backlogItem);
+        activity.Subscribe(new EmailNotificationSubscriber<IActivityContext>());
 
         var sw = new StringWriter();
         Console.SetOut(sw);
@@ -91,20 +90,17 @@ public class ActivityTestingState
         activity.SetState(new Domain.Activity.ActivityTestingState(activity));
 
         // Assert
-        const string expectedOutput = $"Sending email notification\r\n";
-
-        Assert.That(sw.ToString(), Is.EqualTo(expectedOutput));
+        var expectedOutput = $"Sending email notification: {activity}";
+        Assert.That(sw.ToString().Replace(System.Environment.NewLine, string.Empty), Is.EqualTo(expectedOutput));
     }
 
     [Test]
-    public void ActivityDoing_NotifyWhatsapp()
+    public void ActivityTesting_NotifyWhatsapp()
     {
-        User user = new Developer("developer", "email@developer.nl");
-        BacklogItem backlogItem = new BacklogItem("Test backlog");
-        IActivityContext activity = new Activity("test activity", user, backlogItem);
-        
-
-        activity.Subscribe(new WhatsappNotificationSubscriber());
+        var user = new Developer("developer", "email@developer.nl");
+        var backlogItem = new BacklogItem("Test backlog");
+        var activity = new Activity("test activity", user, backlogItem);
+        activity.Subscribe(new WhatsappNotificationSubscriber<IActivityContext>());
 
         var sw = new StringWriter();
         Console.SetOut(sw);
@@ -113,8 +109,8 @@ public class ActivityTestingState
         activity.SetState(new Domain.Activity.ActivityTestingState(activity));
 
         // Assert
-        const string expectedOutput = $"Sending whatsapp notification\r\n";
+        var expectedOutput = $"Sending whatsapp notification: {activity}";
+        Assert.That(sw.ToString().Replace(System.Environment.NewLine, string.Empty), Is.EqualTo(expectedOutput));
 
-        Assert.That(sw.ToString(), Is.EqualTo(expectedOutput));
     }
 }

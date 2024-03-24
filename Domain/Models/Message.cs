@@ -1,15 +1,10 @@
 namespace Domain.Models;
 
-public class Message
+public class Message(User user, string text, DateTime created)
 {
-    private User _user;
-    private string _text;
-    private DateTime _created;
-
-    public Message(User user, string text, DateTime created)
+    public User GetAuthor() => user;
+    public override string ToString()
     {
-        _user = user;
-        _text = text;
-        _created = created;
+        return $"User: {user}, Text: {text}, Created: {created}";
     }
 }

@@ -1,44 +1,41 @@
 using Domain.Interfaces;
+using Domain.Models.SprintState;
 
 namespace Domain.Models;
 
-public class Thread: IPublisher
+public class Thread(ISprintContext sprint) 
 {
-    private List<Message> _messages;
-    private List<ISubscriber> _subscribers = new List<ISubscriber>();
-
-    public Thread()
-    {
-        _messages = new List<Message>();
-        
-    }
+    private readonly List<Message> _messages = [];
+    private readonly ISet<User> _participants = new HashSet<User>();
 
     public void AddMessage(Message msg)
     {
+        _participants.Add(msg.GetAuthor()); 
+        
+        if (sprint.GetState().GetType() == typeof(SprintFinishedState))
+        {
+            throw new InvalidOperationException("Cannot alter the thread of a finished sprint");
+        }
+
         _messages.Add(msg);
-        this.Notify();
+        NotifyParticipants();
     }
 
     public void RemoveMessage(Message msg)
     {
+        if (sprint.GetState().GetType() == typeof(SprintFinishedState))
+        {
+            throw new InvalidOperationException("Cannot alter the thread of a finished sprint");
+        }
+
         _messages.Remove(msg);
     }
 
-    public void Subscribe(ISubscriber listener)
+    private void NotifyParticipants()
     {
-        _subscribers.Add(listener);
-    }
-
-    public void Unsubscribe(ISubscriber listener)
-    {
-        _subscribers.Remove(listener);
-    }
-
-    public void Notify()
-    {
-        foreach (var subscriber in _subscribers)
+        foreach (var participant in _participants)
         {
-            subscriber.Update();
+            participant.SendNotification(_messages.Last());
         }
     }
 }

@@ -1,6 +1,6 @@
 namespace Domain.Interfaces;
 
-public interface ISubscriber
+public interface ISubscriber<in T>
 {
-    void Update();
+    void Update(T changed);
 }

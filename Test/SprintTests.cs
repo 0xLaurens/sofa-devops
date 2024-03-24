@@ -1,6 +1,4 @@
-using Domain.Interfaces;
 using Domain.Models;
-using Domain.Models.SprintState;
 
 namespace Test;
 
@@ -10,9 +8,8 @@ public class SprintTests
     [Test]
     public void Add_Sprint()
     {
-        ISprintContext sprint = new Sprint("sprint 1", new DateTime(2024, 03, 25), new DateTime(2024, 04, 08));
-        
-        sprint.SetState(new SprintProvisionedState(sprint));
+        var sprint = new Sprint("sprint 1", new DateTime(2024, 03, 25), new DateTime(2024, 04, 08));
+        sprint.SetState(new Domain.Models.SprintState.SprintProvisionedState(sprint));
         
         Assert.That(sprint.GetState().GetType(), Is.EqualTo(typeof(Domain.Models.SprintState.SprintProvisionedState)));
     }
@@ -21,9 +18,9 @@ public class SprintTests
     [Test]
     public void Attach_Backlog()
     {
-        ISprintContext sprint = new Sprint("sprint 1", new DateTime(2024, 03, 25), new DateTime(2024, 04, 08));
-
-        sprint.SetState(new SprintProvisionedState(sprint));
+        var sprint = new Sprint("sprint 1", new DateTime(2024, 03, 25), new DateTime(2024, 04, 08));
+        sprint.SetState(new Domain.Models.SprintState.SprintProvisionedState(sprint));
+        
         Backlog backlog = new Backlog("Test Backlog");
         BacklogItem backlogItem = new BacklogItem("test user-story");
         backlog.AddBacklogItem(backlogItem);
@@ -31,8 +28,7 @@ public class SprintTests
         
         Assert.That(sprint.GetBacklog(), Is.EqualTo(backlog));
         Assert.That(backlog.GetBacklogItems().Count, Is.GreaterThanOrEqualTo(1));
-        Assert.That(sprint.GetState().GetType(), Is.EqualTo(typeof(SprintProvisionedState)));
-
+        Assert.That(sprint.GetState().GetType(), Is.EqualTo(typeof(Domain.Models.SprintState.SprintProvisionedState)));
     }
     
     // Integration test: F8 Check if Start & End date of Sprint can be set and don't overlap

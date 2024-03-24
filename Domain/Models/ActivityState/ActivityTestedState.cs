@@ -2,41 +2,29 @@ using Domain.Interfaces;
 
 namespace Domain.Activity;
 
-public class ActivityTestedState : IActivityState
+public class ActivityTestedState(IActivityContext context) : IActivityState
 {
-    private IActivityContext _context;
-
-
-    public ActivityTestedState(IActivityContext context)
-    {
-        _context = context;
-       
-    }
-
-  
-
     public void SetTodo()
     {
-        
-        _context.SetState(new ActivityTodoState(_context));
+        context.SetState(new ActivityTodoState(context));
     }
 
     public void SetDoing()
     {
         
-        _context.SetState(new ActivityDoingState(_context));
+        context.SetState(new ActivityDoingState(context));
     }
 
     public void SetReadyForTesting()
     {
        
-        _context.SetState(new ActivityReadyForTestingState(_context));
+        context.SetState(new ActivityReadyForTestingState(context));
     }
 
     public void SetTesting()
     {
       
-        _context.SetState(new ActivityTestingState(_context));
+        context.SetState(new ActivityTestingState(context));
     }
 
     public void SetTested()
@@ -47,7 +35,11 @@ public class ActivityTestedState : IActivityState
     public void SetDone()
     {
       
-        _context.SetState(new ActivityDoneState(_context));
+        context.SetState(new ActivityDoneState(context));
     }
-
+    
+    public override string ToString()
+    {
+        return "Tested";
+    }
 }

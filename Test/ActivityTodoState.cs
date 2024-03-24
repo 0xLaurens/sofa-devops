@@ -1,5 +1,6 @@
 using Domain.Interfaces;
 using Domain.Models;
+using Domain.Models.Notification;
 using Domain.Models.UserRoles;
 
 namespace Test;
@@ -62,9 +63,9 @@ public class ActivityTodoState
     [Test]
     public void Activity_SetDone()
     {
-        User user = new Developer("developer", "email@developer.nl");
-        BacklogItem backlogItem = new BacklogItem("Test backlog");
-        IActivityContext activity = new Activity("test, activity", user, backlogItem);
+        var user = new Developer("developer", "email@developer.nl");
+        var backlogItem = new BacklogItem("Test backlog");
+        var activity = new Activity("test, activity", user, backlogItem);
         activity.SetState(new Domain.Activity.ActivityTodoState(activity));
 
         Assert.Throws<InvalidOperationException>(() => activity.GetState().SetDone());
@@ -73,44 +74,40 @@ public class ActivityTodoState
     [Test]
     public void ActivityDoing_NotifyEmail()
     {
-        User user = new Developer("developer", "email@developer.nl");
-        BacklogItem backlogItem = new BacklogItem("Test backlog");
-        IActivityContext activity = new Activity("test activity", user, backlogItem);
-        
-
-        activity.Subscribe(new EmailNotificationSubscriber());
+        var user = new Developer("developer", "email@developer.nl");
+        var backlogItem = new BacklogItem("Test backlog");
+        var activity = new Activity("test activity", user, backlogItem);
+        activity.Subscribe(new EmailNotificationSubscriber<IActivityContext>());
 
         var sw = new StringWriter();
         Console.SetOut(sw);
 
         // Act
-        activity.SetState(new Domain.Activity.ActivityTodoState(activity));
+        activity.SetState(new Domain.Activity.ActivityDoingState(activity));
 
         // Assert
-        const string expectedOutput = $"Sending email notification\r\n";
-
-        Assert.That(sw.ToString(), Is.EqualTo(expectedOutput));
+        var expectedOutput = $"Sending email notification: {activity}";
+        Assert.That(sw.ToString().Replace(System.Environment.NewLine, string.Empty), Is.EqualTo(expectedOutput));
     }
 
     [Test]
     public void ActivityDoing_NotifyWhatsapp()
     {
-        User user = new Developer("developer", "email@developer.nl");
-        BacklogItem backlogItem = new BacklogItem("Test backlog");
-        IActivityContext activity = new Activity("test activity", user, backlogItem);
+        var user = new Developer("developer", "email@developer.nl");
+        var backlogItem = new BacklogItem("Test backlog");
+        var activity = new Activity("test activity", user, backlogItem);
         
-
-        activity.Subscribe(new WhatsappNotificationSubscriber());
+        activity.Subscribe(new WhatsappNotificationSubscriber<IActivityContext>());
 
         var sw = new StringWriter();
         Console.SetOut(sw);
 
         // Act
-        activity.SetState(new Domain.Activity.ActivityTodoState(activity));
+        activity.SetState(new Domain.Activity.ActivityDoingState(activity));
 
         // Assert
-        const string expectedOutput = $"Sending whatsapp notification\r\n";
+        var expectedOutput = $"Sending whatsapp notification: {activity}";
 
-        Assert.That(sw.ToString(), Is.EqualTo(expectedOutput));
+        Assert.That(sw.ToString().Replace(System.Environment.NewLine, string.Empty), Is.EqualTo(expectedOutput));
     }
 }
