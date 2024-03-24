@@ -12,13 +12,13 @@ public abstract class BasePipelinePhase(string taskName)
     public abstract void Execute();
 
     // virtual allows override to allow for possible changes
-    public virtual void AddPhase(BasePipelinePhase phase)
+    public void AddPhase(BasePipelinePhase phase)
     {
         Children.Add(phase);
     }
 
     // virtual allows override to allow for possible changes in implementation
-    public virtual void RemovePhase(BasePipelinePhase phase)
+    public void RemovePhase(BasePipelinePhase phase)
     {
         Children.Remove(phase);
     }
