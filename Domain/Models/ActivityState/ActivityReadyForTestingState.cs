@@ -11,6 +11,7 @@ public class ActivityReadyForTestingState : IActivityState
     {
         _context = context;
         
+        
     }
 
    

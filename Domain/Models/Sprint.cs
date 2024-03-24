@@ -13,6 +13,7 @@ public class Sprint: ISprintContext
     private DateTime _endDate;
     private DateTime _created;
     private Backlog _sprintBacklog;
+ 
 
     public Sprint(string name, DateTime startDate, DateTime endDate)
     {
@@ -21,8 +22,18 @@ public class Sprint: ISprintContext
         _startDate = startDate;
         _endDate = endDate;
         _created = DateTime.Now;
-        _sprintBacklog = new Backlog();
+        
         _review = new Review();
+   
+        
+      
+        
+        
+
+
+
+
+
     }
 
     public void SetState(ISprintState state)
@@ -33,5 +44,25 @@ public class Sprint: ISprintContext
     public ISprintState GetState()
     {
         return _sprintState;
+    }
+
+    public void SetBacklog(Backlog backlog)
+    {
+        _sprintBacklog = backlog;
+    }
+
+    public Backlog GetBacklog()
+    {
+        return _sprintBacklog;
+    }
+
+    public DateTime GetStartDate()
+    {
+        return _startDate;
+    }
+
+    public DateTime GetEndDate()
+    {
+        return _endDate;
     }
 }

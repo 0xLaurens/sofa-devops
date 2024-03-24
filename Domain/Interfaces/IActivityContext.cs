@@ -1,3 +1,5 @@
+using Domain.Models;
+
 namespace Domain.Interfaces;
 
 public interface IActivityContext 
@@ -10,4 +12,12 @@ public interface IActivityContext
     public void Unsubscribe(ISubscriber listener);
 
     public void Notify();
+
+    public User getUser();
+
+    
+
+    public BacklogItem GetBacklogItem();
+
+
 }

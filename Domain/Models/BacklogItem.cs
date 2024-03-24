@@ -7,13 +7,17 @@ public class BacklogItem
 {
     // TODO: consider visitor pattern to check the activity their status to change the parents status. 
 
-    private List<Models.Activity> _activities;
+    private List<IActivityContext> _activities;
     private List<Thread> _threads;
+    private string _description;
 
-    public BacklogItem()
+    public BacklogItem(string description)
     {
-        this._activities = new List<Activity>();
+        this._activities = new List<IActivityContext>();
+        this._description = description;
     }
+
+
     
     public BacklogItemState GetState()
     {
@@ -42,9 +46,14 @@ public class BacklogItem
         return BacklogItemState.Done;
     }
 
-    public List<Models.Activity> getActivities()
+    public List<IActivityContext> getActivities()
     {
         return _activities;
+    }
+
+    public void AddActivity(IActivityContext activity)
+    {
+        _activities.Add(activity);
     }
 
     public void AddTread(Thread thread)
