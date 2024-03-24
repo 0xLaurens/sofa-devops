@@ -2,30 +2,23 @@ using Domain.Interfaces;
 
 namespace Domain.Activity;
 
-public class ActivityTestingState : IActivityState
+public class ActivityTestingState(IActivityContext context) : IActivityState
 {
-    private IActivityContext _context;
-
-    public ActivityTestingState(IActivityContext context)
-    {
-        _context = context;
-    }
-
-  
-
     public void SetTodo()
     {
-        _context.SetState(new ActivityTodoState(_context));
+        context.SetState(new ActivityTodoState(context));
     }
 
     public void SetDoing()
     {
-        _context.SetState(new ActivityDoingState(_context));
+        
+        context.SetState(new ActivityDoingState(context));
     }
 
     public void SetReadyForTesting()
     {
-        _context.SetState(new ActivityReadyForTestingState(_context));
+        
+        context.SetState(new ActivityReadyForTestingState(context));
     }
 
     public void SetTesting()
@@ -35,7 +28,8 @@ public class ActivityTestingState : IActivityState
 
     public void SetTested()
     {
-        _context.SetState(new ActivityTestedState(_context));
+        
+        context.SetState(new ActivityTestedState(context));
     }
 
     public void SetDone()
@@ -43,4 +37,8 @@ public class ActivityTestingState : IActivityState
         throw new InvalidOperationException("Set the activity state to Tested first!");
     }
 
+    public override string ToString()
+    {
+        return "Testing";
+    }
 }

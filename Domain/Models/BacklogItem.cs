@@ -1,51 +1,96 @@
 using Domain.Activity;
 using Domain.Interfaces;
+using Domain.Models.UserRoles;
 
 namespace Domain.Models;
 
-public class BacklogItem
+public class BacklogItem : IBacklogItemContext
 {
-    // TODO: consider visitor pattern to check the activity their status to change the parents status. 
+    private readonly List<Activity> _activities = [];
+    private readonly List<Thread> _threads = [];
+    private IBacklogItemState _state;
+    private IBacklogItemState? _previousState;
+    private User? _approver;
+    private User? _assignedUser;
+    private string _description;
 
-    private List<Models.Activity> _activities;
-    private List<Thread> _threads;
-
-    public BacklogItem()
+    public BacklogItem(string description)
     {
-        this._activities = new List<Activity>();
+        _state = new BacklogItemTodoState(this);
+        _description = description;
     }
-
     
-    //TODO: visitor pattern should combine the states of the different activities.
-    public BacklogItemState GetState()
+    public void AssignUser(User user)
     {
-        // Dictionary to map IActivityState to BacklogItemState
-        Dictionary<Type, BacklogItemState> stateMap = new Dictionary<Type, BacklogItemState>
+        if (user.CanAssignBacklogItem())
         {
-            { typeof(ActivityTodoState), BacklogItemState.Todo },
-            { typeof(ActivityDoingState), BacklogItemState.Doing },
-            { typeof(ActivityReadyForTestingState), BacklogItemState.Ready },
-            { typeof(ActivityTestingState), BacklogItemState.Testing },
-            { typeof(ActivityTestedState), BacklogItemState.Tested },
-            { typeof(ActivityDoneState), BacklogItemState.Done }
-        };
-        
-        
-        
-        foreach (BacklogItemState state in Enum.GetValues(typeof(BacklogItemState)))
-        {
-            if (_activities.Any(activity => stateMap[activity.GetState().GetType()] == state))
-                return state;
+            _assignedUser = user; 
+            user.AssignBacklogItem(this);
         }
-
-       
-
-        // If no activity is found, return the default state (Done)
-        return BacklogItemState.Done;
+        else
+        {
+            throw new InvalidOperationException("User cannot be assigned multiple backlog items.");
+        }
+    }
+    
+    public User? GetAssignedUser()
+    {
+        return _assignedUser;
     }
 
-    public List<Models.Activity> getActivities()
+    public void AddActivity(Activity activity)
+    {
+        _activities.Add(activity);
+    }
+
+    public void RemoveActivity(Activity activity)
+    {
+        _activities.Remove(activity);
+    }
+
+    public List<Activity> GetActivities()
     {
         return _activities;
+    }
+
+    public void AddTread(Thread thread)
+    {
+        _threads.Add(thread);
+    }
+
+    public void RemoveThread(Thread thread)
+    {
+        _threads.Remove(thread);
+    }
+
+    public void SetState(IBacklogItemState state)
+    {
+        _previousState = _state;
+        _state = state;
+    }
+
+    public IBacklogItemState GetState()
+    {
+        return _state;
+    }
+
+    public IBacklogItemState? GetPreviousState()
+    {
+        return _previousState;
+    }
+
+    public void SetApprover(User user)
+    {
+        _approver = user;
+    }
+
+    public User GetApprover()
+    {
+        if (_approver is null)
+        {
+            throw new Exception("Approver is not set.");
+        }
+
+        return _approver;
     }
 }

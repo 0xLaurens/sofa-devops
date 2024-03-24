@@ -4,10 +4,10 @@ using Moq;
 
 namespace Test;
 
+//TC27: pipeline
 [TestFixture]
 public class PipelineTests
 {
-    // TODO: reference the specific testcase
     [Test]
     public void ExecutePipeline_CallsCompositeTree_WhenPipelineExists()
     {
@@ -39,7 +39,6 @@ public class PipelineTests
         utilityPhase.Verify(x => x.Execute(), Times.Once);
     }
 
-    // TODO: reference the specific testcase
     [Test]
     public void ExecutePipeline_CallsCompositeTree_WhenPipelineExistsWithMultipleLevels()
     {
@@ -60,7 +59,6 @@ public class PipelineTests
         deployPhase.Verify(x => x.Execute(), Times.Once);
     }
 
-    // TODO: reference the specific testcase
     [Test]
     public void ExecutePipeline_ThrowsNoError_WhenPipelineEmpty()
     {

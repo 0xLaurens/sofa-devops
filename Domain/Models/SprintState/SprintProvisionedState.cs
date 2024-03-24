@@ -20,4 +20,14 @@ public class SprintProvisionedState : ISprintState
     {
         throw new InvalidOperationException("Sprint has not been started yet!");
     }
+
+    public void CreateSprintReview(string description)
+    {
+        throw new InvalidOperationException("Sprint has not been started yet!");
+    }
+    
+    public void StartRelease(User user)
+    {
+        throw new InvalidOperationException("Sprint has not been started yet!");
+    }
 }

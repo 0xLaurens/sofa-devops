@@ -2,17 +2,8 @@ using Domain.Interfaces;
 
 namespace Domain.Activity;
 
-public class ActivityDoneState : IActivityState
+public class ActivityDoneState(IActivityContext context) : IActivityState
 {
-    private IActivityContext _context;
-
-    public ActivityDoneState(IActivityContext context)
-    {
-        _context = context;
-    }
-
-  
-
     public void SetTodo()
     {
         throw new InvalidOperationException("Activity is already done!");
@@ -42,5 +33,9 @@ public class ActivityDoneState : IActivityState
     {
         throw new InvalidOperationException("Activity is already done!");
     }
-
+    
+    public override string ToString()
+    {
+        return "Done";
+    }
 }

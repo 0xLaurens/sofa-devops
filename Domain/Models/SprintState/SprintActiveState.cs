@@ -20,4 +20,14 @@ public class SprintActiveState: ISprintState
     {
        _sprintContext.SetState(new SprintFinishedState(_sprintContext)); 
     }
+    
+    public void CreateSprintReview(string description)
+    {
+        throw new InvalidOperationException("Cannot create a sprint review before finishing the sprint!");
+    }
+    
+    public void StartRelease(User user)
+    {
+        throw new InvalidOperationException("Cannot start a release before finishing the sprint!");
+    }
 }

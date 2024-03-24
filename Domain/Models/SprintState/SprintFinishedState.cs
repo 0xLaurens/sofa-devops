@@ -20,4 +20,14 @@ public class SprintFinishedState : ISprintState
     {
         throw new InvalidOperationException("Sprint has already finished!");
     }
+
+    public void CreateSprintReview(string description)
+    {
+        _sprintContext.CreateSprintReview(description); 
+    }
+    
+    public void StartRelease(User user)
+    {
+        _sprintContext.StartRelease(user);
+    }
 }
