@@ -12,10 +12,12 @@ public class BacklogItem : IBacklogItemContext
     private IBacklogItemState? _previousState;
     private User? _approver;
     private User? _assignedUser;
+    private string _description;
 
-    public BacklogItem()
+    public BacklogItem(string description)
     {
         _state = new BacklogItemTodoState(this);
+        _description = description;
     }
     
     public void AssignUser(User user)

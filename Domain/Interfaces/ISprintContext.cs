@@ -8,4 +8,12 @@ public interface ISprintContext
     public ISprintState GetState();
     public void CreateSprintReview(string description);
     public void StartRelease(User user);
+    
+    public void SetBacklog(Backlog backlog);
+
+    public Backlog GetBacklog();
+
+    public DateTime GetStartDate();
+
+    public DateTime GetEndDate();
 }

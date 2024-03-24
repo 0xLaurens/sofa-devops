@@ -11,7 +11,7 @@ public class BacklogItemTest
     public void AssignUser_ToBacklogItem()
     {
         // Arrange
-        var backlogItem = new BacklogItem();
+        var backlogItem = new BacklogItem("Test backlog");
         var user = new Developer("John", "John@gmail.com");
 
         // Act
@@ -26,8 +26,8 @@ public class BacklogItemTest
     public void AssignUser_ToBacklogItem_ThrowsException()
     {
         // Arrange
-        var backlogItem = new BacklogItem();
-        var backlogItem2 = new BacklogItem();
+        var backlogItem = new BacklogItem("Test backlog");
+        var backlogItem2 = new BacklogItem("Test backlog2");
         var user = new Developer("John", "John@gmail.com");
 
         // Act

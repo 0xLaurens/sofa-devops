@@ -13,10 +13,10 @@ public class Sprint : ISprintContext
     private DateTime _startDate;
     private DateTime _endDate;
     private DateTime _created;
-    private readonly Backlog _sprintBacklog;
+    private Backlog _sprintBacklog;
     private Pipeline _pipeline = new();
     private readonly List<User> _teamMembers = [];
-
+ 
     public Sprint(string name, DateTime startDate, DateTime endDate)
     {
         _sprintState = new SprintProvisionedState(this);
@@ -24,7 +24,7 @@ public class Sprint : ISprintContext
         _startDate = startDate;
         _endDate = endDate;
         _created = DateTime.Now;
-        _sprintBacklog = new Backlog();
+        _sprintBacklog = new Backlog("Sprint Backlog");
     }
 
     public void SetState(ISprintState state)
@@ -40,6 +40,27 @@ public class Sprint : ISprintContext
     public void CreateSprintReview(string description)
     {
         _review = new Review(description); 
+    }
+
+    public void SetBacklog(Backlog backlog)
+    {
+        _sprintBacklog = backlog;
+    }
+
+    public Backlog GetBacklog()
+    {
+        return _sprintBacklog;
+    }
+
+    public DateTime GetStartDate()
+    {
+        return _startDate;
+    }
+
+    public DateTime GetEndDate()
+    {
+        return _endDate;
+
     }
 
     public void AddBacklogItem(BacklogItem item)
