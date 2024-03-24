@@ -18,4 +18,9 @@ public class SprintActiveState(ISprintContext sprintContext) : ISprintState
     {
         throw new InvalidOperationException("Cannot create a sprint review before finishing the sprint!");
     }
+    
+    public void StartRelease(User user)
+    {
+        throw new InvalidOperationException("Cannot start a release before finishing the sprint!");
+    }
 }

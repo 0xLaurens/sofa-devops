@@ -72,7 +72,7 @@ public class Sprint : ISprintContext
         _pipeline = pipeline;
     }
 
-    public void ExecutePipeline(User user)
+    public void StartRelease(User user)
     {
         if (user.GetType() != typeof(ScrumMaster))
         {

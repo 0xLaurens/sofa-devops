@@ -20,4 +20,9 @@ public class SprintFinishedState(ISprintContext sprintContext) : ISprintState
     {
         _sprintContext.CreateSprintReview(description); 
     }
+    
+    public void StartRelease(User user)
+    {
+        _sprintContext.StartRelease(user);
+    }
 }

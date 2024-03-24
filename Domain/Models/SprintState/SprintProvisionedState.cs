@@ -18,4 +18,9 @@ public class SprintProvisionedState(ISprintContext sprintContext) : ISprintState
     {
         throw new InvalidOperationException("Sprint has not been started yet!");
     }
+    
+    public void StartRelease(User user)
+    {
+        throw new InvalidOperationException("Sprint has not been started yet!");
+    }
 }
