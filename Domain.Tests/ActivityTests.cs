@@ -12,7 +12,7 @@ public class ActivityTests
     public void Attach_User_to_Backlog()
     {
         User user = new Developer("developer", "email@developer.nl");
-        BacklogItem backlogItem = new BacklogItem("Test backlog");
+        BacklogItem backlogItem = new BacklogItem("Domain.Tests backlog");
         var activity = new Activity("test activity", user, backlogItem);
 
 
@@ -24,7 +24,7 @@ public class ActivityTests
     public void Change_Activity_State()
     {
         User user = new Developer("developer", "email@developer.nl");
-        BacklogItem backlogItem = new BacklogItem("Test backlog");
+        BacklogItem backlogItem = new BacklogItem("Domain.Tests backlog");
         IActivityContext activity = new Activity("test activity", user, backlogItem);
 
 
@@ -34,14 +34,14 @@ public class ActivityTests
     }
 
     // // integration test: F11 Check if user switches Activity
-    // [Test]
+    // [Domain.Tests]
     // public void Check_User_has_Multiple_Activities()
     // {
     //     var sw = new StringWriter();
     //     Console.SetOut(sw);
     //
     //     var user = new Developer("developer", "email@developer.nl");
-    //     var backlogItem = new BacklogItem("Test backlog");
+    //     var backlogItem = new BacklogItem("Domain.Tests backlog");
     //     var activity = new Activity("test activity", user, backlogItem);
     //     backlogItem.AddActivity(activity);
     //

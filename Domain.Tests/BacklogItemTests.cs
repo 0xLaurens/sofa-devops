@@ -7,10 +7,10 @@ namespace Test;
 public class BacklogItemTests
 {
     // // integration test: F3 Check if Activity can be added to BacklogItem
-    // [Test]
+    // [Domain.Tests]
     // public void Add_Activity()
     // {
-    //     var backlog = new Backlog("Test Backlog");
+    //     var backlog = new Backlog("Domain.Tests Backlog");
     //     var backlogItem = new BacklogItem("test user-story");
     //     backlog.AddBacklogItem(backlogItem);
     //     User user = new Developer("developer", "email@developer.nl");
@@ -26,10 +26,10 @@ public class BacklogItemTests
     //
     // // integration test: F6 Check state of BacklogItem
     // //TODO: fix state test
-    // [Test]
+    // [Domain.Tests]
     // public void Check_BacklogItem_State()
     // {
-    //     var backlog = new Backlog("Test Backlog");
+    //     var backlog = new Backlog("Domain.Tests Backlog");
     //     var backlogItem = new BacklogItem("test user-story");
     //     backlog.AddBacklogItem(backlogItem);
     //     var user = new Developer("developer", "email@developer.nl");
@@ -59,10 +59,10 @@ public class BacklogItemTests
     // }
     //
     // // Integration test: F9 Check if Tester gets notification when all Activities are ready for testing
-    // [Test]
+    // [Domain.Tests]
     // public void Send_Notification_When_All_Ready_for_Testing()
     // {
-    //     Backlog backlog = new Backlog("Test Backlog");
+    //     Backlog backlog = new Backlog("Domain.Tests Backlog");
     //     BacklogItem backlogItem = new BacklogItem("test user-story");
     //     backlog.AddBacklogItem(backlogItem);
     //     User user = new Developer("developer", "email@developer.nl");
