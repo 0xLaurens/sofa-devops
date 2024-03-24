@@ -14,12 +14,11 @@ public class ActivityDoingState
         User user = new Developer("developer", "email@developer.nl");
         BacklogItem backlogItem = new BacklogItem("Test backlog");
         IActivityContext activity = new Activity("test activity", user, backlogItem);
-     
         activity.SetState(new Domain.Activity.ActivityTodoState(activity));
         activity.GetState().SetDoing();
         Assert.That(activity.GetState().GetType(), Is.EqualTo(typeof(Domain.Activity.ActivityDoingState)));
     }
-    
+
     [Test]
     public void Activity_SetTodo()
     {
@@ -31,37 +30,30 @@ public class ActivityDoingState
         activity.GetState().SetTodo();
         Assert.That(activity.GetState().GetType(), Is.EqualTo(typeof(Domain.Activity.ActivityTodoState)));
     }
-    
+
     [Test]
     public void Activity_SetReadyForTesting()
     {
         User user = new Developer("developer", "email@developer.nl");
         BacklogItem backlogItem = new BacklogItem("Test backlog");
         IActivityContext activity = new Activity("test activity", user, backlogItem);
-        
-       
-        
         activity.SetState(new Domain.Activity.ActivityDoingState(activity));
-        
+
         activity.GetState().SetReadyForTesting();
         Assert.That(activity.GetState().GetType(), Is.EqualTo(typeof(Domain.Activity.ActivityReadyForTestingState)));
-      
-        
     }
-    
+
     [Test]
     public void Activity_SetTested()
     {
         User user = new Developer("developer", "email@developer.nl");
         BacklogItem backlogItem = new BacklogItem("Test backlog");
         IActivityContext activity = new Activity("test activity", user, backlogItem);
-        
         activity.SetState(new Domain.Activity.ActivityDoingState(activity));
-        
+
         Assert.Throws<InvalidOperationException>(() => activity.GetState().SetTested());
-        
     }
-    
+
     [Test]
     public void Activity_SetTesting()
     {
@@ -69,22 +61,19 @@ public class ActivityDoingState
         BacklogItem backlogItem = new BacklogItem("Test backlog");
         IActivityContext activity = new Activity("test activity", user, backlogItem);
         activity.SetState(new Domain.Activity.ActivityDoingState(activity));
-        
+
         Assert.Throws<InvalidOperationException>(() => activity.GetState().SetTesting());
     }
-    
+
     [Test]
     public void Activity_SetDone()
     {
         User user = new Developer("developer", "email@developer.nl");
         BacklogItem backlogItem = new BacklogItem("Test backlog");
         IActivityContext activity = new Activity("test activity", user, backlogItem);
-        
         activity.SetState(new Domain.Activity.ActivityDoingState(activity));
-        
-        Assert.Throws<InvalidOperationException>(() => activity.GetState().SetDone());
-        
 
+        Assert.Throws<InvalidOperationException>(() => activity.GetState().SetDone());
     }
 
     [Test]
@@ -96,22 +85,21 @@ public class ActivityDoingState
        
 
         activity.Subscribe(new EmailNotificationSubscriber());
-        
-       using (StringWriter sw = new StringWriter())
-       {
-           Console.SetOut(sw);
 
-           // Act
-           activity.SetState(new Domain.Activity.ActivityDoingState(activity));
+        using (StringWriter sw = new StringWriter())
+        {
+            Console.SetOut(sw);
 
-           // Assert
-           string expectedOutput = $"Sending email notification\r\n";
-                            
-           Assert.AreEqual(expectedOutput, sw.ToString());
-       }
-        
+            // Act
+            activity.SetState(new Domain.Activity.ActivityDoingState(activity));
+
+            // Assert
+            string expectedOutput = $"Sending email notification\r\n";
+
+            Assert.AreEqual(expectedOutput, sw.ToString());
+        }
     }
-    
+
     [Test]
     public void ActivityDoing_NotifyWhatsapp()
     {
@@ -121,7 +109,7 @@ public class ActivityDoingState
         
 
         activity.Subscribe(new WhatsappNotificationSubscriber());
-        
+
         using (StringWriter sw = new StringWriter())
         {
             Console.SetOut(sw);
@@ -131,9 +119,8 @@ public class ActivityDoingState
 
             // Assert
             string expectedOutput = $"Sending whatsapp notification\r\n";
-                            
+
             Assert.AreEqual(expectedOutput, sw.ToString());
         }
-        
     }
 }

@@ -25,19 +25,17 @@ public class BacklogItemState
         activity2.GetState().SetReadyForTesting();
     
         Activity activity3 = new Activity("test activity 3", user, backlogItem);
-      
         activity3.SetState(new Domain.Activity.ActivityDoingState(activity));
         activity3.GetState().SetReadyForTesting();
   
         Activity activity4 = new Activity("test activity 4", user, backlogItem);
-        
         activity4.SetState(new Domain.Activity.ActivityTestedState(activity));
         activity4.GetState().SetReadyForTesting();
         
-        item.getActivities().Add(activity);
-        item.getActivities().Add(activity2);
-        item.getActivities().Add(activity3);
-        item.getActivities().Add(activity4);
+        item.AddActivity(activity);
+        item.AddActivity(activity2);
+        item.AddActivity(activity3);
+        item.AddActivity(activity4);
 
         item.GetState();
         

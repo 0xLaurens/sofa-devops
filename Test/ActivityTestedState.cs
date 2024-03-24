@@ -5,44 +5,42 @@ using Domain.Models.UserRoles;
 
 namespace Test;
 
-
 public class ActivityTestedState
 {
-        [Test]
+    [Test]
     public void Activity_SetDoing()
     {
+
         User user = new Developer("developer", "email@developer.nl");
         BacklogItem backlogItem = new BacklogItem("Test backlog");
         IActivityContext activity = new Activity("test activity", user, backlogItem);
-        
         activity.SetState(new Domain.Activity.ActivityTestedState(activity));
         activity.GetState().SetDoing();
         Assert.That(activity.GetState().GetType(), Is.EqualTo(typeof(Domain.Activity.ActivityDoingState)));
     }
-    
+
     [Test]
     public void Activity_SetTodo()
     {
         User user = new Developer("developer", "email@developer.nl");
         BacklogItem backlogItem = new BacklogItem("Test backlog");
         IActivityContext activity = new Activity("test activity", user, backlogItem);
-        
         activity.SetState(new Domain.Activity.ActivityTestedState(activity));
         activity.GetState().SetTodo();
         Assert.That(activity.GetState().GetType(), Is.EqualTo(typeof(Domain.Activity.ActivityTodoState)));
     }
-    
+
     [Test]
     public void Activity_SetReadyForTesting()
     {
         User user = new Developer("developer", "email@developer.nl");
         BacklogItem backlogItem = new BacklogItem("Test backlog");
         IActivityContext activity = new Activity("test activity", user, backlogItem);
-    
         activity.SetState(new Domain.Activity.ActivityTestedState(activity));
         activity.GetState().SetReadyForTesting();
         Assert.That(activity.GetState().GetType(), Is.EqualTo(typeof(Domain.Activity.ActivityReadyForTestingState)));
     }
+
     
     // integration test: F10 Check that activity can only change to Todo state after failed test
     [Test]
@@ -57,10 +55,9 @@ public class ActivityTestedState
         Assert.That(activity.GetState().GetType(), Is.EqualTo(typeof(Domain.Activity.ActivityTestedState)));
         activity.GetState().SetTodo();
         
-        Assert.That(activity.GetState().GetType(), Is.EqualTo(typeof(Domain.Activity.ActivityTodoState)));
-        
+        Assert.That(activity.GetState().GetType(), Is.EqualTo(typeof(Domain.Activity.ActivityTodoState)))
     }
-    
+
     [Test]
     public void Activity_SetTesting()
     {
@@ -68,71 +65,58 @@ public class ActivityTestedState
         User user = new Developer("developer", "email@developer.nl");
         BacklogItem backlogItem = new BacklogItem("Test backlog");
         IActivityContext activity = new Activity("test activity", user, backlogItem);
-        
+
         activity.SetState(new Domain.Activity.ActivityTestedState(activity));
         activity.GetState().SetTesting();
         Assert.That(activity.GetState().GetType(), Is.EqualTo(typeof(Domain.Activity.ActivityTestingState)));
     }
-    
+
     [Test]
     public void Activity_SetDone()
     {
         User user = new Developer("developer", "email@developer.nl");
         BacklogItem backlogItem = new BacklogItem("Test backlog");
         IActivityContext activity = new Activity("test activity", user, backlogItem);
-  
         activity.SetState(new Domain.Activity.ActivityTestedState(activity));
         activity.GetState().SetDone();
         Assert.That(activity.GetState().GetType(), Is.EqualTo(typeof(Domain.Activity.ActivityDoneState)));
     }
-    
+
     [Test]
     public void ActivityDoing_NotifyEmail()
     {
         User user = new Developer("developer", "email@developer.nl");
         BacklogItem backlogItem = new BacklogItem("Test backlog");
         IActivityContext activity = new Activity("test activity", user, backlogItem);
-      
 
         activity.Subscribe(new EmailNotificationSubscriber());
-        
-        using (StringWriter sw = new StringWriter())
-        {
-            Console.SetOut(sw);
+        var sw = new StringWriter();
+        Console.SetOut(sw);
 
-            // Act
-            activity.SetState(new Domain.Activity.ActivityTestedState(activity));
+        // Act
+        activity.SetState(new Domain.Activity.ActivityTestedState(activity));
 
-            // Assert
-            string expectedOutput = $"Sending email notification\r\n";
-                            
-            Assert.AreEqual(expectedOutput, sw.ToString());
-        }
-        
+        // Assert
+        const string expectedOutput = $"Sending email notification\r\n";
+        Assert.That(sw.ToString(), Is.EqualTo(expectedOutput));
     }
-    
+
     [Test]
     public void ActivityDoing_NotifyWhatsapp()
     {
         User user = new Developer("developer", "email@developer.nl");
         BacklogItem backlogItem = new BacklogItem("Test backlog");
         IActivityContext activity = new Activity("test activity", user, backlogItem);
-    
 
-        activity.Subscribe(new WhatsappNotificationSubscriber());
-        
-        using (StringWriter sw = new StringWriter())
-        {
-            Console.SetOut(sw);
+        var sw = new StringWriter();
+        Console.SetOut(sw);
 
-            // Act
-            activity.SetState(new Domain.Activity.ActivityTestedState(activity));
+        // Act
+        activity.SetState(new Domain.Activity.ActivityTestedState(activity));
 
-            // Assert
-            string expectedOutput = $"Sending whatsapp notification\r\n";
-                            
-            Assert.AreEqual(expectedOutput, sw.ToString());
-        }
-        
+        // Assert
+        const string expectedOutput = $"Sending whatsapp notification\r\n";
+
+        Assert.That(sw.ToString(), Is.EqualTo(expectedOutput));
     }
 }

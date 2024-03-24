@@ -1,5 +1,6 @@
 using Domain.Interfaces;
 using Domain.Models;
+using Domain.Models.ReportTypes;
 using Domain.Models.UserRoles;
 using Moq;
 
@@ -11,7 +12,7 @@ public class ReportExportTests
     public void Export_HeaderReport_PDF()
     {
         var exportStrategy = new Mock<PdfExportStrategy>();
-        List<User> users = new List<User>();
+        var users = new List<User>();
         User user1 = new ScrumMaster("scrummaster", "email@scrummaster.nl");
         User user2 = new Developer("developer", "email@Developer.nl");
         User user3 = new LeadDeveloper("leaddeveloper", "email@leaddeveloper.nl");
@@ -20,20 +21,16 @@ public class ReportExportTests
         users.Add(user2);
         users.Add(user3);
         users.Add(user4);
-        Report report = new Header(users, exportStrategy.Object, new BurndownChart());
-        
-        
-        
-        
-        
+        Report report = new HeaderReport(users, exportStrategy.Object, new BurndownChart());
+
         Assert.That(() => report.Export(), Throws.Nothing);
     }
-    
+
     [Test]
     public void Export_HeaderReport_PNG()
     {
         var exportStrategy = new Mock<PngExportStrategy>();
-        List<User> users = new List<User>();
+        var users = new List<User>();
         User user1 = new ScrumMaster("scrummaster", "email@scrummaster.nl");
         User user2 = new Developer("developer", "email@Developer.nl");
         User user3 = new LeadDeveloper("leaddeveloper", "email@leaddeveloper.nl");
@@ -42,20 +39,16 @@ public class ReportExportTests
         users.Add(user2);
         users.Add(user3);
         users.Add(user4);
-        Report report = new Header(users, exportStrategy.Object, new BurndownChart());
-        
-        
-        
-        
-        
+        Report report = new HeaderReport(users, exportStrategy.Object, new BurndownChart());
+
         Assert.That(() => report.Export(), Throws.Nothing);
     }
-    
+
     [Test]
     public void Export_FooterReport_PNG()
     {
         var exportStrategy = new Mock<PngExportStrategy>();
-        List<User> users = new List<User>();
+        var users = new List<User>();
         User user1 = new ScrumMaster("scrummaster", "email@scrummaster.nl");
         User user2 = new Developer("developer", "email@Developer.nl");
         User user3 = new LeadDeveloper("leaddeveloper", "email@leaddeveloper.nl");
@@ -64,17 +57,11 @@ public class ReportExportTests
         users.Add(user2);
         users.Add(user3);
         users.Add(user4);
-        Report report = new Footer(users, exportStrategy.Object, new BurndownChart());
-        
-        
-        
-        
-        
+        Report report = new FooterReport(users, exportStrategy.Object, new BurndownChart());
+
         Assert.That(() => report.Export(), Throws.Nothing);
-        //exportStrategy.Verify(x => x.ExportReport(), Times.Once);
-        
     }
-    
+
     [Test]
     public void Export_FooterReport_PDF()
     {
@@ -88,14 +75,9 @@ public class ReportExportTests
         users.Add(user2);
         users.Add(user3);
         users.Add(user4);
-        Report report = new Footer(users, exportStrategy.Object, new BurndownChart());
-        
-        
-        
-        
-        
+        Report report = new FooterReport(users, exportStrategy.Object, new BurndownChart());
+
         Assert.That(() => report.Export(), Throws.Nothing);
         //exportStrategy.Verify(x => x.ExportReport(), Times.Once);
-        
     }
 }
