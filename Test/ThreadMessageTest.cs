@@ -23,9 +23,9 @@ public class ThreadMessageTest
         thread.AddMessage(message);
 
         // Assert
-        const string expectedOutput = $"Sending email notification\r\n";
+        const string expectedOutput = $"Sending email notification";
 
-        Assert.That(sw.ToString(), Is.EqualTo(expectedOutput));
+        Assert.That(sw.ToString().Replace(System.Environment.NewLine, string.Empty), Is.EqualTo(expectedOutput));
     }
 
     [Test]
@@ -43,8 +43,8 @@ public class ThreadMessageTest
         thread.AddMessage(message);
 
         // Assert
-        const string expectedOutput = $"Sending whatsapp notification\r\n";
+        const string expectedOutput = $"Sending whatsapp notification";
 
-        Assert.That(sw.ToString(), Is.EqualTo(expectedOutput));
+        Assert.That(sw.ToString().Replace(System.Environment.NewLine, string.Empty), Is.EqualTo(expectedOutput));
     }
 }

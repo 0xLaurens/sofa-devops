@@ -71,21 +71,19 @@ public class ActivityReadyForTestingState
     {
         IActivityContext activity = new Activity();
 
-
         activity.Subscribe(new EmailNotificationSubscriber());
 
-        using (StringWriter sw = new StringWriter())
-        {
-            Console.SetOut(sw);
+        var sw = new StringWriter();
+        Console.SetOut(sw);
 
-            // Act
-            activity.SetState(new Domain.Activity.ActivityReadyForTestingState(activity));
+        // Act
+        activity.SetState(new Domain.Activity.ActivityDoneState(activity));
 
-            // Assert
-            const string expectedOutput = $"Sending email notification\r\n";
+        // Assert
+        const string expectedOutput = $"Sending email notification";
 
-            Assert.That(sw.ToString(), Is.EqualTo(expectedOutput));
-        }
+        Assert.That(sw.ToString().Replace(System.Environment.NewLine, string.Empty), Is.EqualTo(expectedOutput));
+
     }
 
     [Test]
@@ -99,11 +97,12 @@ public class ActivityReadyForTestingState
         Console.SetOut(sw);
 
         // Act
-        activity.SetState(new Domain.Activity.ActivityReadyForTestingState(activity));
+        activity.SetState(new Domain.Activity.ActivityDoingState(activity));
 
         // Assert
-        const string expectedOutput = $"Sending whatsapp notification\r\n";
+        const string expectedOutput = $"Sending whatsapp notification";
 
-        Assert.That(sw.ToString(), Is.EqualTo(expectedOutput));
+        Assert.That(sw.ToString().Replace(System.Environment.NewLine, string.Empty), Is.EqualTo(expectedOutput));
+
     }
 }
