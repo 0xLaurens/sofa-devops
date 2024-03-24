@@ -2,10 +2,10 @@ using Domain.Interfaces;
 
 namespace Domain.Models.Notification;
 
-public class WhatsappNotificationSubscriber: ISubscriber
+public class WhatsappNotificationSubscriber<T>: ISubscriber<T>
 {
-    public void Update()
+    public void Update(T changed)
     {
-        Console.WriteLine("Sending whatsapp notification");
+        Console.WriteLine($"Sending whatsapp notification: {changed}");
     }
 }

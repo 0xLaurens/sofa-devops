@@ -2,12 +2,10 @@ using Domain.Interfaces;
 
 namespace Domain.Models.Notification;
 
-public class EmailNotificationSubscriber: ISubscriber
+public class EmailNotificationSubscriber<T> : ISubscriber<T>
 {
-    public void Update()
+    public void Update(T changed)
     {
-        
-            Console.WriteLine("Sending email notification");
-        
+        Console.WriteLine($"Sending email notification: {changed}");
     }
 }

@@ -2,15 +2,15 @@ using Domain.Interfaces;
 
 namespace Domain.Models;
 
-public class Thread: IPublisher
+public class Thread : IPublisher<Message>
 {
     private readonly List<Message> _messages = [];
-    private readonly List<ISubscriber> _subscribers = [];
+    private readonly List<ISubscriber<Message>> _subscribers = [];
 
     public void AddMessage(Message msg)
     {
         _messages.Add(msg);
-        this.Notify();
+        Notify();
     }
 
     public void RemoveMessage(Message msg)
@@ -18,12 +18,12 @@ public class Thread: IPublisher
         _messages.Remove(msg);
     }
 
-    public void Subscribe(ISubscriber listener)
+    public void Subscribe(ISubscriber<Message> listener)
     {
         _subscribers.Add(listener);
     }
 
-    public void Unsubscribe(ISubscriber listener)
+    public void Unsubscribe(ISubscriber<Message> listener)
     {
         _subscribers.Remove(listener);
     }
@@ -32,7 +32,7 @@ public class Thread: IPublisher
     {
         foreach (var subscriber in _subscribers)
         {
-            subscriber.Update();
+            subscriber.Update(_messages.Last());
         }
     }
 }

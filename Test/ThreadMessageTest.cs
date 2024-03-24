@@ -11,8 +11,7 @@ public class ThreadMessageTest
     public void Thread_NotifyEmail()
     {
         var thread = new Thread();
-
-        thread.Subscribe(new EmailNotificationSubscriber());
+        thread.Subscribe(new EmailNotificationSubscriber<Message>());
 
         var sw = new StringWriter();
         Console.SetOut(sw);
@@ -23,7 +22,7 @@ public class ThreadMessageTest
         thread.AddMessage(message);
 
         // Assert
-        const string expectedOutput = $"Sending email notification";
+        var expectedOutput = $"Sending email notification: {message}";
 
         Assert.That(sw.ToString().Replace(System.Environment.NewLine, string.Empty), Is.EqualTo(expectedOutput));
     }
@@ -32,8 +31,8 @@ public class ThreadMessageTest
     public void Thread_NotifyWhatsapp()
     {
         var thread = new Thread();
-
-        thread.Subscribe(new WhatsappNotificationSubscriber());
+        thread.Subscribe(new WhatsappNotificationSubscriber<Message>());
+        
         var sw = new StringWriter();
         Console.SetOut(sw);
 
@@ -43,7 +42,7 @@ public class ThreadMessageTest
         thread.AddMessage(message);
 
         // Assert
-        const string expectedOutput = $"Sending whatsapp notification";
+        var expectedOutput = $"Sending whatsapp notification: {message}";
 
         Assert.That(sw.ToString().Replace(System.Environment.NewLine, string.Empty), Is.EqualTo(expectedOutput));
     }
