@@ -4,8 +4,6 @@ namespace Domain.Models;
 
 public class BacklogItemTodoState(IBacklogItemContext context) : IBacklogItemState
 {
-    private IBacklogItemContext _context = context;
-
     public void SetTodo()
     {
         throw new InvalidOperationException("Backlog item is already in Todo state.");
@@ -13,26 +11,26 @@ public class BacklogItemTodoState(IBacklogItemContext context) : IBacklogItemSta
 
     public void SetDoing()
     {
-        _context.SetState(new BacklogItemDoingState(_context));
+        context.SetState(new BacklogItemDoingState(context));
     }
 
     public void SetReadyForTesting()
     {
-        _context.SetState(new BacklogItemReadyForTestingState(_context));
+        context.SetState(new BacklogItemReadyForTestingState(context));
     }
 
     public void SetTesting()
     {
-        _context.SetState(new BacklogItemTestingState(_context));
+        context.SetState(new BacklogItemTestingState(context));
     }
 
     public void SetTested()
     {
-        _context.SetState(new BacklogItemTestedState(_context));
+        context.SetState(new BacklogItemTestedState(context));
     }
 
     public void SetDone()
     {
-        _context.SetState(new BacklogItemDoneState(_context));
+        context.SetState(new BacklogItemDoneState(context));
     }
 }

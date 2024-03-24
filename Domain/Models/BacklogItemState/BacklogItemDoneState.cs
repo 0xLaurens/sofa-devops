@@ -4,31 +4,29 @@ namespace Domain.Models;
 
 public class BacklogItemDoneState(IBacklogItemContext context) : IBacklogItemState
 {
-    private IBacklogItemContext _context = context;
-
     public void SetTodo()
     {
-        _context.SetState(new BacklogItemTodoState(_context));
+        context.SetState(new BacklogItemTodoState(context));
     }
 
     public void SetDoing()
     {
-        _context.SetState(new BacklogItemDoingState(_context));
+        context.SetState(new BacklogItemDoingState(context));
     }
 
     public void SetReadyForTesting()
     {
-        _context.SetState(new BacklogItemReadyForTestingState(_context));
+        context.SetState(new BacklogItemReadyForTestingState(context));
     }
 
     public void SetTesting()
     {
-        _context.SetState(new BacklogItemTestingState(_context));
+        context.SetState(new BacklogItemTestingState(context));
     }
 
     public void SetTested()
     {
-        _context.SetState(new BacklogItemTestedState(_context));
+        context.SetState(new BacklogItemTestedState(context));
     }
 
     public void SetDone()
