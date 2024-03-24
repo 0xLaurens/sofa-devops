@@ -5,25 +5,27 @@ using Domain.Models.UserRoles;
 
 namespace Test;
 
-public class ActivityDoneState
+public class ActivityTodoState
 {
     [Test]
     public void Activity_SetDoing()
     {
         User user = new Developer("developer", "email@developer.nl");
-        BacklogItem backlogItem = new BacklogItem("Test backlog");
+        BacklogItem backlogItem = new BacklogItem("Domain.Test backlog");
         IActivityContext activity = new Activity("test activity", user, backlogItem);
-        activity.SetState(new Domain.Activity.ActivityDoneState(activity));
-        Assert.Throws<InvalidOperationException>(() => activity.GetState().SetDoing());
+        activity.SetState(new Domain.Activity.ActivityTodoState(activity));
+        activity.GetState().SetDoing();
+        Assert.That(activity.GetState().GetType(), Is.EqualTo(typeof(Domain.Activity.ActivityDoingState)));
     }
 
     [Test]
     public void Activity_SetTodo()
     {
         User user = new Developer("developer", "email@developer.nl");
-        BacklogItem backlogItem = new BacklogItem("Test backlog");
-        IActivityContext activity = new Activity("test activity", user, backlogItem);
-        activity.SetState(new Domain.Activity.ActivityDoneState(activity));
+        BacklogItem backlogItem = new BacklogItem("Domain.Test backlog");
+        Activity activity = new Activity("test activity", user, backlogItem);
+        
+        activity.SetState(new Domain.Activity.ActivityTodoState(activity));
         Assert.Throws<InvalidOperationException>(() => activity.GetState().SetTodo());
     }
 
@@ -31,9 +33,9 @@ public class ActivityDoneState
     public void Activity_SetReadyForTesting()
     {
         User user = new Developer("developer", "email@developer.nl");
-        BacklogItem backlogItem = new BacklogItem("Test backlog");
+        BacklogItem backlogItem = new BacklogItem("Domain.Test backlog");
         IActivityContext activity = new Activity("test activity", user, backlogItem);
-        activity.SetState(new Domain.Activity.ActivityDoneState(activity));
+        activity.SetState(new Domain.Activity.ActivityTodoState(activity));
         Assert.Throws<InvalidOperationException>(() => activity.GetState().SetReadyForTesting());
     }
 
@@ -41,9 +43,9 @@ public class ActivityDoneState
     public void Activity_SetTested()
     {
         User user = new Developer("developer", "email@developer.nl");
-        BacklogItem backlogItem = new BacklogItem("Test backlog");
+        BacklogItem backlogItem = new BacklogItem("Domain.Test backlog");
         IActivityContext activity = new Activity("test activity", user, backlogItem);
-        activity.SetState(new Domain.Activity.ActivityDoneState(activity));
+        activity.SetState(new Domain.Activity.ActivityTodoState(activity));
 
         Assert.Throws<InvalidOperationException>(() => activity.GetState().SetTested());
     }
@@ -52,37 +54,36 @@ public class ActivityDoneState
     public void Activity_SetTesting()
     {
         User user = new Developer("developer", "email@developer.nl");
-        BacklogItem backlogItem = new BacklogItem("Test backlog");
+        BacklogItem backlogItem = new BacklogItem("Domain.Test backlog");
         IActivityContext activity = new Activity("test activity", user, backlogItem);
-        activity.SetState(new Domain.Activity.ActivityDoneState(activity));
+        activity.SetState(new Domain.Activity.ActivityTodoState(activity));
         Assert.Throws<InvalidOperationException>(() => activity.GetState().SetTesting());
     }
 
     [Test]
     public void Activity_SetDone()
     {
-        User user = new Developer("developer", "email@developer.nl");
-        BacklogItem backlogItem = new BacklogItem("Test backlog");
-        IActivityContext activity = new Activity("test activity", user, backlogItem);
-        activity.SetState(new Domain.Activity.ActivityTestedState(activity));
-        activity.GetState().SetDone();
-        Assert.That(activity.GetState().GetType(), Is.EqualTo(typeof(Domain.Activity.ActivityDoneState)));
+        var user = new Developer("developer", "email@developer.nl");
+        var backlogItem = new BacklogItem("Domain.Test backlog");
+        var activity = new Activity("test, activity", user, backlogItem);
+        activity.SetState(new Domain.Activity.ActivityTodoState(activity));
+
+        Assert.Throws<InvalidOperationException>(() => activity.GetState().SetDone());
     }
 
     [Test]
-    public void ActivityDone_NotifyEmail()
+    public void ActivityDoing_NotifyEmail()
     {
-        User user = new Developer("developer", "email@developer.nl");
-        BacklogItem backlogItem = new BacklogItem("Test backlog");
+        var user = new Developer("developer", "email@developer.nl");
+        var backlogItem = new BacklogItem("Domain.Test backlog");
         var activity = new Activity("test activity", user, backlogItem);
+        activity.Subscribe(new EmailNotificationSubscriber<IActivityContext>());
 
-        
         var sw = new StringWriter();
         Console.SetOut(sw);
 
         // Act
-        activity.Subscribe(new EmailNotificationSubscriber<IActivityContext>());
-        activity.SetState(new Domain.Activity.ActivityDoneState(activity));
+        activity.SetState(new Domain.Activity.ActivityDoingState(activity));
 
         // Assert
         var expectedOutput = $"Sending email notification: {activity}";
@@ -90,22 +91,23 @@ public class ActivityDoneState
     }
 
     [Test]
-    public void ActivityDone_NotifyWhatsapp()
+    public void ActivityDoing_NotifyWhatsapp()
     {
-        User user = new Developer("developer", "email@developer.nl");
-        BacklogItem backlogItem = new BacklogItem("Test backlog");
+        var user = new Developer("developer", "email@developer.nl");
+        var backlogItem = new BacklogItem("Domain.Test backlog");
         var activity = new Activity("test activity", user, backlogItem);
-
+        
         activity.Subscribe(new WhatsappNotificationSubscriber<IActivityContext>());
 
         var sw = new StringWriter();
         Console.SetOut(sw);
 
         // Act
-        activity.SetState(new Domain.Activity.ActivityDoneState(activity));
+        activity.SetState(new Domain.Activity.ActivityDoingState(activity));
 
         // Assert
         var expectedOutput = $"Sending whatsapp notification: {activity}";
+
         Assert.That(sw.ToString().Replace(System.Environment.NewLine, string.Empty), Is.EqualTo(expectedOutput));
     }
 }

@@ -12,7 +12,7 @@ public class ActivityTestingState
     public void Activity_SetDoing()
     {
         User user = new Developer("developer", "email@developer.nl");
-        BacklogItem backlogItem = new BacklogItem("Test backlog");
+        BacklogItem backlogItem = new BacklogItem("Domain.Test backlog");
         IActivityContext activity = new Activity("test activity", user, backlogItem);
         activity.SetState(new Domain.Activity.ActivityTestingState(activity));
         activity.GetState().SetDoing();
@@ -23,7 +23,7 @@ public class ActivityTestingState
     public void Activity_SetTodo()
     {
         User user = new Developer("developer", "email@developer.nl");
-        BacklogItem backlogItem = new BacklogItem("Test backlog");
+        BacklogItem backlogItem = new BacklogItem("Domain.Test backlog");
         Activity activity = new Activity("test activity", user, backlogItem);
    
         activity.SetState(new Domain.Activity.ActivityTestingState(activity));
@@ -35,7 +35,7 @@ public class ActivityTestingState
     public void Activity_SetReadyForTesting()
     {
         User user = new Developer("developer", "email@developer.nl");
-        BacklogItem backlogItem = new BacklogItem("Test backlog");
+        BacklogItem backlogItem = new BacklogItem("Domain.Test backlog");
         IActivityContext activity = new Activity("test activity", user, backlogItem);
         activity.SetState(new Domain.Activity.ActivityDoingState(activity));
         activity.GetState().SetReadyForTesting();
@@ -46,7 +46,7 @@ public class ActivityTestingState
     public void Activity_SetTested()
     {
         User user = new Developer("developer", "email@developer.nl");
-        BacklogItem backlogItem = new BacklogItem("Test backlog");
+        BacklogItem backlogItem = new BacklogItem("Domain.Test backlog");
         IActivityContext activity = new Activity("test activity", user, backlogItem);
         activity.SetState(new Domain.Activity.ActivityTestingState(activity));
         activity.GetState().SetTested();
@@ -57,7 +57,7 @@ public class ActivityTestingState
     public void Activity_SetTesting()
     {
         User user = new Developer("developer", "email@developer.nl");
-        BacklogItem backlogItem = new BacklogItem("Test backlog");
+        BacklogItem backlogItem = new BacklogItem("Domain.Test backlog");
         IActivityContext activity = new Activity("test activity", user, backlogItem);
         activity.SetState(new Domain.Activity.ActivityReadyForTestingState(activity));
         activity.GetState().SetTesting();
@@ -68,7 +68,7 @@ public class ActivityTestingState
     public void Activity_SetDone()
     {
         User user = new Developer("developer", "email@developer.nl");
-        BacklogItem backlogItem = new BacklogItem("Test backlog");
+        BacklogItem backlogItem = new BacklogItem("Domain.Test backlog");
         IActivityContext activity = new Activity("test activity", user, backlogItem);
         activity.SetState(new Domain.Activity.ActivityReadyForTestingState(activity));
 
@@ -79,7 +79,7 @@ public class ActivityTestingState
     public void ActivityTesting_NotifyEmail()
     {
         var user = new Developer("developer", "email@developer.nl");
-        var backlogItem = new BacklogItem("Test backlog");
+        var backlogItem = new BacklogItem("Domain.Test backlog");
         var activity = new Activity("test activity", user, backlogItem);
         activity.Subscribe(new EmailNotificationSubscriber<IActivityContext>());
 
@@ -98,7 +98,7 @@ public class ActivityTestingState
     public void ActivityTesting_NotifyWhatsapp()
     {
         var user = new Developer("developer", "email@developer.nl");
-        var backlogItem = new BacklogItem("Test backlog");
+        var backlogItem = new BacklogItem("Domain.Test backlog");
         var activity = new Activity("test activity", user, backlogItem);
         activity.Subscribe(new WhatsappNotificationSubscriber<IActivityContext>());
 

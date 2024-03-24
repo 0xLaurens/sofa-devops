@@ -21,7 +21,7 @@ public class SprintTests
         var sprint = new Sprint("sprint 1", new DateTime(2024, 03, 25), new DateTime(2024, 04, 08));
         sprint.SetState(new Domain.Models.SprintState.SprintProvisionedState(sprint));
         
-        Backlog backlog = new Backlog("Test Backlog");
+        Backlog backlog = new Backlog("Domain.Test Backlog");
         BacklogItem backlogItem = new BacklogItem("test user-story");
         backlog.AddBacklogItem(backlogItem);
         sprint.SetBacklog(backlog);
